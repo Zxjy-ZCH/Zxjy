@@ -1029,6 +1029,16 @@
                 icon: "android",
                 iconStyle: "fab",
                 path: "./MT管理器.apk"
+            },
+            {
+                id: 5,
+                name: "Polaris2.5.exe",
+                type: "exe",
+                size: "13.3 MB",
+                date: "2026-7-14",
+                icon: "windows",
+                iconStyle: "fab",
+                path: "./Polaris2.5.exe" 
             }
         ];
 
@@ -1091,7 +1101,7 @@
             console.log(`检查完成: ${availableFiles}/${totalFiles} 个文件可用`);
 
             if (availableFiles < totalFiles) {
-                showError(`有 ${totalFiles - availableFiles} 个文件在服务器上不可用。请确保文件已上传到GitHub仓库的正确位置。`);
+                showError(`有 ${totalFiles - availableFiles} 个文件在服务器上不可用。`);
             }
         }
 
@@ -1558,7 +1568,7 @@
         // 开始实际下载过程
         function startActualDownload(fileId, fileName, fileSize, filePath, fileType) {
             // 更新下载状态
-            downloadStatus.textContent = "文件可用，开始下载...";
+            downloadStatus.textContent = "文件可用，开始获取信息...";
             progressBar.style.width = "20%";
 
             // 模拟下载进度
@@ -1574,18 +1584,18 @@
 
                 // 计算已下载大小
                 const downloadedSize = (fileSizeNum * progress / 100).toFixed(1);
-                downloadDetails.textContent = `文件大小: ${fileSize} | 已下载: ${downloadedSize} ${sizeUnit}`;
+                downloadDetails.textContent = `文件大小: ${fileSize} | 正在拉取: ${downloadedSize} ${sizeUnit}`;
 
                 if (progress < 40) {
                     downloadStatus.textContent = "正在连接服务器...";
                 } else if (progress < 70) {
-                    downloadStatus.textContent = "正在下载文件...";
+                    downloadStatus.textContent = "正在获取文件...";
                 } else if (progress < 95) {
                     downloadStatus.textContent = "正在处理文件...";
                 } else if (progress < 100) {
-                    downloadStatus.textContent = "正在完成下载...";
+                    downloadStatus.textContent = "正在拉起下载...";
                 } else {
-                    downloadStatus.textContent = "下载完成!";
+                    downloadStatus.textContent = "操作完成!";
                     downloadStatus.style.color = "#27ae60";
 
                     // 当进度达到100%时，实际触发文件下载
