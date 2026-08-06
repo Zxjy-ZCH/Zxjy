@@ -49,4 +49,15 @@
         "iconStyle": "fab",
         "path": "./Polaris2.5.exe"
     }
+    {
+        "id": 6,
+        "name": "迷你过ACE2.7.exe",
+        "type": "exe",
+        "size": "8.46 MB",
+        "date": "2026-08-6",
+        "icon": "windows",
+        "iconStyle": "fab",
+        "path": "./迷你过ACE2.7.exe"
+    }
+    
 ]
