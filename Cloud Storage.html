@@ -986,7 +986,7 @@
 
         async function loadFilesFromJSON() {
             try {
-                const response = await fetch('./files.json', {
+                const response = await fetch('/files.json', {
                     cache: 'no-cache'
                 });
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
