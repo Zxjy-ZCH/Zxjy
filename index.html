@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zxjy · 个人空间</title>
     <style>
         * {
@@ -10,6 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         :root {
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
@@ -17,22 +18,71 @@
             --gold: #ffd700;
             --orange: #ff8c00;
             --radius: 20px;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        html {
-            -webkit-tap-highlight-color: transparent;
-        }
+
         body {
-            font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, sans-serif;
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, -apple-system, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px;
-            background: #0b1a3a;
-            overflow: hidden;
-            position: relative;
-            margin: 0;
+            background: linear-gradient(135deg, #0b1a3a, #1a2a6c, #6b1a2a, #b21f1f, #fdbb2d);
+            background-size: 500% 500%;
+            animation: gradientFlow 18s ease-in-out infinite alternate;
+            overflow-x: hidden;
         }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 12s ease-in-out infinite alternate;
+        }
+        body::before {
+            width: 50vw;
+            height: 50vw;
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, #ffd700, transparent 70%);
+            animation-delay: 0s;
+        }
+        body::after {
+            width: 40vw;
+            height: 40vw;
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            animation-delay: -4s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(40px, -30px) scale(1.1);
+            }
+        }
+
         .container {
             position: relative;
             z-index: 1;
@@ -46,41 +96,24 @@
             border-radius: var(--radius);
             box-shadow: 0 30px 80px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
             text-align: center;
-            transition: box-shadow 0.5s ease;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            overflow: hidden;
+            transition: box-shadow 0.5s;
         }
+
         .container:hover {
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        }
-
-        #water-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            pointer-events: none;
-            border-radius: var(--radius);
-            z-index: 0;
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
         }
 
         .header {
             position: relative;
             margin-bottom: 36px;
         }
+
         .avatar-wrapper {
             position: relative;
             display: inline-block;
             margin-bottom: 18px;
         }
+
         .avatar-wrapper img {
             width: 140px;
             height: 140px;
@@ -89,25 +122,27 @@
             object-fit: cover;
             border: 3px solid rgba(255, 255, 255, 0.25);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
+            transition: transform 0.5s, box-shadow 0.5s;
             animation: avatarFloat 5s ease-in-out infinite;
             position: relative;
             z-index: 2;
-            will-change: transform;
         }
+
         .avatar-wrapper img:hover {
             transform: scale(1.04) rotate(-2deg);
             box-shadow: 0 20px 60px rgba(255, 215, 0, 0.25);
         }
+
         @keyframes avatarFloat {
             0%,
             100% {
-                transform: translate3d(0, 0, 0);
+                transform: translateY(0);
             }
             50% {
-                transform: translate3d(0, -10px, 0);
+                transform: translateY(-10px);
             }
         }
+
         .avatar-ring {
             position: absolute;
             inset: -8px;
@@ -122,6 +157,7 @@
             border-color: rgba(255, 140, 0, 0.1);
             animation-delay: 0.6s;
         }
+
         @keyframes ringPulse {
             0%,
             100% {
@@ -133,6 +169,7 @@
                 opacity: 0.1;
             }
         }
+
         .name {
             font-size: 4.8rem;
             font-weight: 800;
@@ -146,8 +183,8 @@
             filter: drop-shadow(0 4px 20px rgba(255, 215, 0, 0.15));
             animation: textGlow 3s ease-in-out infinite alternate;
             line-height: 1.1;
-            will-change: filter;
         }
+
         @keyframes textGlow {
             0% {
                 filter: drop-shadow(0 4px 20px rgba(255, 215, 0, 0.10));
@@ -156,6 +193,7 @@
                 filter: drop-shadow(0 4px 40px rgba(255, 215, 0, 0.30));
             }
         }
+
         .subtitle-wrap {
             margin-top: 8px;
             min-height: 2.4rem;
@@ -164,6 +202,7 @@
             justify-content: center;
             gap: 6px;
         }
+
         .subtitle {
             font-size: 1.3rem;
             font-weight: 300;
@@ -176,6 +215,7 @@
             animation: blinkCursor 0.8s step-end infinite;
             white-space: nowrap;
         }
+
         @keyframes blinkCursor {
             0%,
             100% {
@@ -185,6 +225,7 @@
                 border-color: transparent;
             }
         }
+
         .status-badge {
             display: inline-block;
             margin-top: 12px;
@@ -198,6 +239,7 @@
             color: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(4px);
         }
+
         .status-badge .dot {
             display: inline-block;
             width: 8px;
@@ -208,6 +250,7 @@
             animation: dotPulse 2s ease-in-out infinite;
             vertical-align: middle;
         }
+
         @keyframes dotPulse {
             0%,
             100% {
@@ -219,12 +262,14 @@
                 transform: scale(0.8);
             }
         }
+
         .content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 24px;
             margin-top: 32px;
         }
+
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(8px);
@@ -233,13 +278,14 @@
             border-radius: 16px;
             padding: 28px 22px 24px;
             text-align: left;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease, background 0.5s ease;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s,
+                background 0.4s;
             cursor: default;
             position: relative;
             overflow: hidden;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
         }
+
         .card::after {
             content: '';
             position: absolute;
@@ -249,23 +295,27 @@
             bottom: 0;
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.03), transparent 60%);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s;
             pointer-events: none;
             border-radius: 16px;
         }
+
         .card:hover {
-            transform: translate3d(0, -8px, 0) scale(1.01);
+            transform: translateY(-8px) scale(1.01);
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
             background: rgba(255, 255, 255, 0.09);
         }
+
         .card:hover::after {
             opacity: 1;
         }
+
         .card .icon {
             font-size: 2rem;
             margin-bottom: 12px;
             display: block;
         }
+
         .card h3 {
             font-size: 1.25rem;
             font-weight: 600;
@@ -275,6 +325,7 @@
             position: relative;
             z-index: 1;
         }
+
         .card p {
             font-size: 0.95rem;
             line-height: 1.7;
@@ -283,6 +334,7 @@
             position: relative;
             z-index: 1;
         }
+
         .card .tag-group {
             display: flex;
             flex-wrap: wrap;
@@ -291,6 +343,7 @@
             position: relative;
             z-index: 1;
         }
+
         .card .tag {
             padding: 4px 14px;
             border-radius: 20px;
@@ -300,12 +353,14 @@
             background: rgba(255, 215, 0, 0.08);
             border: 1px solid rgba(255, 215, 0, 0.10);
             color: rgba(255, 255, 255, 0.6);
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s, color 0.3s;
         }
+
         .card:hover .tag {
             background: rgba(255, 215, 0, 0.14);
             color: rgba(255, 255, 255, 0.85);
         }
+
         .social-links {
             display: flex;
             justify-content: center;
@@ -313,6 +368,7 @@
             gap: 16px;
             margin-top: 40px;
         }
+
         .social-icon {
             display: inline-flex;
             align-items: center;
@@ -328,15 +384,16 @@
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             backdrop-filter: blur(4px);
             position: relative;
-            will-change: transform;
         }
+
         .social-icon:hover {
-            transform: translate3d(0, -6px, 0) scale(1.08);
+            transform: translateY(-6px) scale(1.08);
             background: rgba(255, 215, 0, 0.15);
             border-color: rgba(255, 215, 0, 0.30);
             color: #fff;
             box-shadow: 0 12px 30px rgba(255, 215, 0, 0.10);
         }
+
         .social-icon .label {
             position: absolute;
             bottom: calc(100% + 10px);
@@ -352,12 +409,14 @@
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
+
         .social-icon:hover .label {
             opacity: 1;
             transform: translateX(-50%) scale(1);
         }
+
         .toast-container {
             position: fixed;
             bottom: 80px;
@@ -393,6 +452,7 @@
         .toast-container .toast-message {
             letter-spacing: 0.3px;
         }
+
         .footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -402,45 +462,46 @@
             color: rgba(255, 255, 255, 0.35);
             letter-spacing: 0.5px;
         }
+
         .footer span {
             opacity: 0.5;
-        }
-        .hint {
-            margin-top: 16px;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
-            letter-spacing: 0.5px;
-            opacity: 0.6;
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 32px 22px;
             }
+
             .name {
                 font-size: 3.2rem;
                 letter-spacing: 2px;
             }
+
             .avatar-wrapper img {
                 width: 110px;
                 height: 110px;
             }
+
             .subtitle {
                 font-size: 1.05rem;
                 white-space: normal;
             }
+
             .content {
                 grid-template-columns: 1fr;
                 gap: 18px;
             }
+
             .card {
                 padding: 22px 20px;
             }
+
             .social-icon {
                 width: 48px;
                 height: 48px;
                 font-size: 1.3rem;
             }
+
             .toast-container {
                 bottom: 60px;
                 padding: 12px 24px;
@@ -448,6 +509,7 @@
                 border-radius: 24px;
             }
         }
+
         @media (max-width: 480px) {
             body {
                 padding: 12px;
@@ -491,6 +553,7 @@
                 font-size: 1.1rem;
             }
         }
+
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -504,20 +567,23 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 215, 0, 0.40);
         }
+
         .container {
             opacity: 0;
             animation: fadeInUp 1s ease forwards;
         }
+
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 30px, 0) scale(0.97);
+                transform: translateY(30px) scale(0.97);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translateY(0) scale(1);
             }
         }
+
         .card {
             opacity: 0;
             animation: cardIn 0.7s ease forwards;
@@ -531,16 +597,18 @@
         .card:nth-child(3) {
             animation-delay: 0.30s;
         }
+
         @keyframes cardIn {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 20px, 0);
+                transform: translateY(20px);
             }
             100% {
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                transform: translateY(0);
             }
         }
+
         .social-icon {
             opacity: 0;
             animation: iconIn 0.5s ease forwards;
@@ -557,6 +625,7 @@
         .social-icon:nth-child(4) {
             animation-delay: 0.56s;
         }
+
         @keyframes iconIn {
             0% {
                 opacity: 0;
@@ -571,536 +640,236 @@
 </head>
 <body>
 
-    <div class="container" id="mainContainer">
-        <canvas id="water-canvas"></canvas>
-
-        <div class="content-wrapper">
-            <div class="header">
-                <div class="avatar-wrapper">
-                    <img width="140" height="140" src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487" alt="Zxjy 头像" loading="lazy" />
-                    <div class="avatar-ring"></div>
-                    <div class="avatar-ring"></div>
-                </div>
-                <h1 class="name">Zxjy</h1>
-                <div class="subtitle-wrap">
-                    <span class="subtitle" id="typingText">探索 · 创造 · 分享</span>
-                </div>
-                <div class="status-badge">
-                    <span class="dot"></span> 在线 · 保持热爱
-                </div>
+    <div class="container">
+        <div class="header">
+            <div class="avatar-wrapper">
+                <img
+                width="140"
+                height="140"
+                src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487"
+                alt="Zxjy 头像"
+                loading="lazy"
+                />
+                <div class="avatar-ring"></div>
+                <div class="avatar-ring"></div>
             </div>
 
-            <div class="content">
-                <div class="card">
-                    <span class="icon">‍💻</span>
-                    <h3>关于我</h3>
-                    <p>一个热爱技术与创造的探索者。相信代码是表达思想的工具，设计是传递情感的桥梁。这里是我的小小数字角落。</p>
-                    <div class="tag-group">
-                        <span class="tag"># 全栈</span>
-                        <span class="tag"># 设计</span>
-                        <span class="tag"># 音乐</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="icon">🚀</span>
-                    <h3>兴趣领域</h3>
-                    <p>网页设计 · 用户体验 · 前端开发 · 数字艺术<br />音乐创作 · 摄影 · 旅行 · 生活方式</p>
-                    <div class="tag-group">
-                        <span class="tag"># 创意</span>
-                        <span class="tag"># 技术</span>
-                        <span class="tag"># 艺术</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="icon">💬</span>
-                    <h3>联系我</h3>
-                    <p>对作品感兴趣？有合作想法？或者只是想聊聊技术、音乐和旅行？欢迎通过下方渠道找到我。</p>
-                    <div class="tag-group">
-                        <span class="tag"># 开放</span>
-                        <span class="tag"># 交流</span>
-                        <span class="tag"># 合作</span>
-                    </div>
-                </div>
+            <h1 class="name">Zxjy</h1>
+
+            <div class="subtitle-wrap">
+                <span class="subtitle" id="typingText">探索 · 创造 · 分享</span>
             </div>
 
-            <div class="social-links">
-                <a href="https://www.douyin.com/user/MS4wLjABAAAATaM_T_9qBIPcDf4my5Ehsbr8HHCiBa9atbXW8PS27KEkPzr40lT-zVYqAhvClFVB?from_tab_name=main" class="social-icon" target="_blank" rel="noopener" aria-label="抖音">
-                    🎵 <span class="label">抖音</span>
-                </a>
-                <a href="https://1104590487.qzone.qq.com" id="qzone-link" class="social-icon" target="_blank" rel="noopener" aria-label="QQ空间">
-                    🐧 <span class="label">QQ空间</span>
-                </a>
-                <a href="Cloud Storage.html" class="social-icon" aria-label="云存储">
-                    ⬇️ <span class="label">云存储</span>
-                </a>
-                <a href="404.html" class="social-icon" aria-label="作品集">
-                    🎨 <span class="label">作品集</span>
-                </a>
-            </div>
-
-            <div class="footer">
-                <p>&copy; 2026 Zxjy · 保留所有权利</p>
-                <div class="hint">✦ 移动鼠标 / 倾斜手机，水会晃动并流向低处 ✦</div>
+            <div class="status-badge">
+                <span class="dot"></span> 在线 · 保持热爱
             </div>
         </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
-    </script>
+        <div class="content">
+            <div class="card">
+                <span class="icon">‍💻</span>
+                <h3>关于我</h3>
+                <p>
+                    一个热爱技术与创造的探索者。相信代码是表达思想的工具，
+                    设计是传递情感的桥梁。这里是我的小小数字角落。
+                </p>
+                <div class="tag-group">
+                    <span class="tag"># 全栈</span>
+                    <span class="tag"># 设计</span>
+                    <span class="tag"># 音乐</span>
+                </div>
+            </div>
 
-    <script>
-        (function() {
-            'use strict';
+            <div class="card">
+                <span class="icon">🚀</span>
+                <h3>兴趣领域</h3>
+                <p>
+                    网页设计 · 用户体验 · 前端开发 · 数字艺术<br />
+                    音乐创作 · 摄影 · 旅行 · 生活方式
+                </p>
+                <div class="tag-group">
+                    <span class="tag"># 创意</span>
+                    <span class="tag"># 技术</span>
+                    <span class="tag"># 艺术</span>
+                </div>
+            </div>
 
-            // ---- 打字机 ----
-            const phrases = ['探索 · 创造 · 分享', '代码 · 设计 · 生活', '用热爱驱动每一天'];
-            const el = document.getElementById('typingText');
-            let phraseIndex = 0,
-                charIndex = 0,
-                isDeleting = false,
-                timer = null;
-            const typeEffect = () => {
-                const current = phrases[phraseIndex];
-                if (!isDeleting) {
-                    el.textContent = current.slice(0, charIndex + 1);
-                    charIndex++;
-                    if (charIndex === current.length) {
-                        isDeleting = true;
-                        clearTimeout(timer);
-                        timer = setTimeout(typeEffect, 2200);
-                        return;
-                    }
-                    timer = setTimeout(typeEffect, 80 + Math.random() * 40);
-                } else {
-                    el.textContent = current.slice(0, charIndex - 1);
-                    charIndex--;
-                    if (charIndex === 0) {
-                        isDeleting = false;
-                        phraseIndex = (phraseIndex + 1) % phrases.length;
-                        timer = setTimeout(typeEffect, 400);
-                        return;
-                    }
-                    timer = setTimeout(typeEffect, 40 + Math.random() * 30);
-                }
-            };
-            typeEffect();
+            <div class="card">
+                <span class="icon">💬</span>
+                <h3>联系我</h3>
+                <p>
+                    对作品感兴趣？有合作想法？或者只是想聊聊技术、音乐和旅行？
+                    欢迎通过下方渠道找到我。
+                </p>
+                <div class="tag-group">
+                    <span class="tag"># 开放</span>
+                    <span class="tag"># 交流</span>
+                    <span class="tag"># 合作</span>
+                </div>
+            </div>
+        </div>
 
-            // ---- 容器 3D 倾斜 ----
-            const container = document.querySelector('.container');
-            let mouseX = 0,
-                mouseY = 0,
-                currentX = 0,
-                currentY = 0;
-            document.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                mouseX = (e.clientX - rect.left) / rect.width - 0.5;
-                mouseY = (e.clientY - rect.top) / rect.height - 0.5;
-            }, { passive: true });
+        <div class="social-links">
+            <a href="https://www.douyin.com/user/MS4wLjABAAAATaM_T_9qBIPcDf4my5Ehsbr8HHCiBa9atbXW8PS27KEkPzr40lT-zVYqAhvClFVB?from_tab_name=main"
+            class="social-icon"
+            target="_blank"
+            rel="noopener"
+            aria-label="抖音">
+            🎵
+            <span class="label">抖音</span>
+        </a>
+        <a href="https://1104590487.qzone.qq.com"
+        id="qzone-link"
+        class="social-icon"
+        target="_blank"
+        rel="noopener"
+        aria-label="QQ空间">
+        🐧
+        <span class="label">QQ空间</span>
+    </a>
+    <a href="Cloud Storage.html"
+    class="social-icon"
+    aria-label="云存储">
+    ⬇️
+    <span class="label">云存储</span>
+</a>
+<a href="404.html"
+class="social-icon"
+aria-label="作品集">
+🎨
+<span class="label">作品集</span>
+</a>
+</div>
 
-            function animateContainer() {
-                currentX += (mouseX - currentX) * 0.06;
-                currentY += (mouseY - currentY) * 0.06;
-                const rx = currentY * 3;
-                const ry = currentX * 3;
-                container.style.transform =
-                    `translate3d(0,0,0) perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1)`;
-                requestAnimationFrame(animateContainer);
-            }
-            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-                animateContainer();
-            }
+<div class="footer">
+    <p>&copy; 2026 Zxjy · 保留所有权利</p>
+</div>
+</div>
 
-            // ---- 卡片悬停 ----
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width - 0.5;
-                    const y = (e.clientY - rect.top) / rect.height - 0.5;
-                    card.style.transform =
-                        `translate3d(0,-8px,0) scale(1.01) perspective(800px) rotateX(${y * 4}deg) rotateY(${-x * 4}deg)`;
-                }, { passive: true });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = '';
-                }, { passive: true });
-            });
+<script>
+    (function() {
+        'use strict';
 
-            // ---- Toast ----
-            const qzoneLink = document.getElementById('qzone-link');
-            let toastTimer = null;
+        const phrases = [
+            '探索 · 创造 · 分享',
+            '代码 · 设计 · 生活',
+            '保持好奇 · 持续生长',
+            '用热爱驱动每一天'
+        ];
 
-            function showToast(msg, icon = '🐧') {
-                const existing = document.querySelector('.toast-container');
-                if (existing) existing.remove();
-                if (toastTimer) clearTimeout(toastTimer);
-                const toast = document.createElement('div');
-                toast.className = 'toast-container';
-                toast.innerHTML = `<span class="toast-icon">${icon}</span><span class="toast-message">${msg}</span>`;
-                document.body.appendChild(toast);
-                requestAnimationFrame(() => toast.classList.add('show'));
-                toastTimer = setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 350);
-                }, 2800);
-            }
-            if (qzoneLink) {
-                qzoneLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showToast('QQ空间暂不可用', '🐧');
-                });
-            }
+        const el = document.getElementById('typingText');
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let timer = null;
 
-            // ============================================================
-            //  水体模拟 —— 侧面视角，带体积的圆柱体水
-            // ============================================================
-            const canvas = document.getElementById('water-canvas');
-            const containerEl = document.getElementById('mainContainer');
-            if (!canvas || !containerEl) return;
-
-            const scene = new THREE.Scene();
-
-            const renderer = new THREE.WebGLRenderer({
-                canvas: canvas,
-                alpha: true,
-                antialias: true,
-                powerPreference: "high-performance"
-            });
-            renderer.setClearColor(0x000000, 0);
-            renderer.outputEncoding = THREE.sRGBEncoding;
-
-            // ---- 相机：侧面视角，略俯视 ----
-            const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-            camera.position.set(4, 2.5, 6);
-            camera.lookAt(0, 0.2, 0);
-
-            // ---- 光照 ----
-            const ambient = new THREE.AmbientLight(0x4488bb, 0.6);
-            scene.add(ambient);
-
-            const mainLight = new THREE.DirectionalLight(0xffeedd, 1.2);
-            mainLight.position.set(4, 6, 5);
-            scene.add(mainLight);
-
-            const fillLight = new THREE.DirectionalLight(0x88ddff, 0.8);
-            fillLight.position.set(-4, 2, -6);
-            scene.add(fillLight);
-
-            const rimLight = new THREE.DirectionalLight(0xaaccff, 0.5);
-            rimLight.position.set(0, -3, 7);
-            scene.add(rimLight);
-
-            // ---- 水体参数（扁圆柱体） ----
-            let radius = 3.5;
-            let height = 0.8; // 水的厚度
-            let radialSegments = 50;
-            let heightSegments = 8;
-            let waterMesh;
-            let geometry, material;
-            let positions, originalPositions;
-            let topIndices = []; // 存储顶部顶点的索引
-
-            // 物理状态
-            let currentTiltX = 0,
-                currentTiltY = 0;
-            let targetTiltX = 0,
-                targetTiltY = 0;
-            let velocityTiltX = 0,
-                velocityTiltY = 0;
-            const springStiffness = 0.15;
-            const damping = 0.92;
-            const maxTiltAngle = 1.6;
-
-            // 波浪参数
-            let waveTime = 0;
-
-            function createWaterCylinder(radius, height, radialSeg, heightSeg) {
-                // 使用 CylinderGeometry 生成水体的几何体
-                const geo = new THREE.CylinderGeometry(radius, radius, height, radialSeg, heightSeg);
-                // 获取顶点位置
-                const pos = geo.attributes.position.array;
-                const count = pos.length / 3;
-
-                // 识别顶部顶点（y > height/2 - 0.01）
-                const eps = 0.01;
-                const halfH = height / 2;
-                const topIdx = [];
-                for (let i = 0; i < count; i++) {
-                    if (pos[i * 3 + 1] > halfH - eps) {
-                        topIdx.push(i);
-                    }
-                }
-                // 保存原始位置（用于计算）
-                const origPos = new Float32Array(pos);
-                // 添加颜色属性
-                const colors = new Float32Array(count * 3);
-                for (let i = 0; i < count; i++) {
-                    const y = pos[i * 3 + 1];
-                    const normY = (y + halfH) / height;
-                    const r = 0.1 + 0.2 * normY;
-                    const g = 0.4 + 0.5 * normY;
-                    const b = 0.7 + 0.3 * normY;
-                    colors[i * 3] = r;
-                    colors[i * 3 + 1] = g;
-                    colors[i * 3 + 2] = b;
-                }
-                geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-
-                // 保存额外数据
-                geo.userData.topIndices = topIdx;
-                geo.userData.origPos = origPos;
-                geo.userData.halfH = halfH;
-
-                return geo;
-            }
-
-            function initWater() {
-                if (typeof THREE === 'undefined') {
-                    setTimeout(initWater, 500);
+        function typeEffect() {
+            const current = phrases[phraseIndex];
+            if (!isDeleting) {
+                el.textContent = current.slice(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === current.length) {
+                    isDeleting = true;
+                    clearTimeout(timer);
+                    timer = setTimeout(typeEffect, 2200);
                     return;
                 }
-
-                const rect = containerEl.getBoundingClientRect();
-                const w = rect.width;
-                const h = rect.height;
-                radius = Math.min(w, h) * 0.3; // 半径适中
-                const aspect = w / h;
-                camera.aspect = aspect;
-                camera.updateProjectionMatrix();
-                renderer.setSize(w, h, false);
-
-                geometry = createWaterCylinder(radius, height, radialSegments, heightSegments);
-                originalPositions = new Float32Array(geometry.userData.origPos);
-                positions = geometry.attributes.position.array;
-
-                // ---- 材质：透明、高光 ----
-                material = new THREE.MeshPhongMaterial({
-                    vertexColors: true,
-                    transparent: true,
-                    opacity: 0.7,
-                    shininess: 150,
-                    specular: new THREE.Color(0x88ccff),
-                    side: THREE.DoubleSide,
-                    flatShading: false,
-                    emissive: new THREE.Color(0x002244),
-                    emissiveIntensity: 0.05,
-                });
-
-                waterMesh = new THREE.Mesh(geometry, material);
-                scene.add(waterMesh);
-
-                // 初始化时更新一次顶点
-                updateWaterVertices(0);
-
-                window.addEventListener('resize', onResize);
-                setupControls();
-                animateWater();
-            }
-
-            function updateWaterVertices(time) {
-                if (!geometry) return;
-                const pos = geometry.attributes.position.array;
-                const cols = geometry.attributes.color.array;
-                const count = pos.length / 3;
-                const halfH = geometry.userData.halfH;
-                const topIdx = geometry.userData.topIndices;
-                const orig = geometry.userData.origPos;
-
-                // 倾斜方向
-                const gx = currentTiltY;
-                const gz = -currentTiltX;
-                const gLen = Math.sqrt(gx * gx + gz * gz);
-                let normX = 0,
-                    normZ = 0;
-                if (gLen > 0.001) {
-                    normX = gx / gLen;
-                    normZ = gz / gLen;
-                }
-
-                // 晃动速度影响波浪
-                const speed = Math.sqrt(velocityTiltX * velocityTiltX + velocityTiltY * velocityTiltY);
-                const waveAmp = 0.12 + speed * 0.2;
-
-                // 计算顶部顶点的偏移
-                const topOffsets = {};
-                for (let idx of topIdx) {
-                    const i = idx * 3;
-                    const x = orig[i];
-                    const z = orig[i + 2];
-                    const dist = Math.sqrt(x * x + z * z);
-                    let tiltOffset = 0;
-                    if (dist < radius && gLen > 0.001) {
-                        const proj = x * normX + z * normZ;
-                        tiltOffset = proj * 1.0; // 倾斜高度差
-                    }
-                    // 波浪
-                    const wave1 = Math.sin(x * 2.0 + z * 1.5 + time * 2.3) * 0.10 * waveAmp;
-                    const wave2 = Math.cos(x * 2.8 - z * 1.8 + time * 1.9) * 0.06 * waveAmp;
-                    const wave3 = Math.sin((x + z) * 1.2 + time * 1.1) * 0.04 * waveAmp;
-                    const wave = wave1 + wave2 + wave3;
-                    const yOffset = tiltOffset + wave;
-                    topOffsets[idx] = yOffset;
-                }
-
-                // 计算平均偏移，保持体积守恒
-                let sumOffset = 0;
-                for (let idx of topIdx) {
-                    sumOffset += topOffsets[idx];
-                }
-                const avgOffset = sumOffset / topIdx.length;
-                const deltaAvg = -avgOffset; // 保持平均高度为0
-
-                // 应用偏移到所有顶点
-                for (let i = 0; i < count; i++) {
-                    const idx = i * 3;
-                    const origY = orig[idx + 1];
-                    // 判断是否顶部顶点
-                    if (topIdx.includes(i)) {
-                        let yOffset = topOffsets[i] + deltaAvg;
-                        // 限制高度范围
-                        yOffset = Math.max(-0.6, Math.min(0.6, yOffset));
-                        pos[idx + 1] = halfH + yOffset;
-                    } else {
-                        // 底部和侧面顶点保持不变（但侧面顶点可以插值，这里简化）
-                        pos[idx + 1] = origY;
-                    }
-                    // 更新颜色（按高度）
-                    const y = pos[idx + 1];
-                    const normY = (y + halfH) / height;
-                    const r = 0.1 + 0.2 * normY;
-                    const g = 0.4 + 0.5 * normY;
-                    const b = 0.7 + 0.3 * normY;
-                    cols[idx] = r;
-                    cols[idx + 1] = g;
-                    cols[idx + 2] = b;
-                }
-
-                geometry.attributes.position.needsUpdate = true;
-                geometry.attributes.color.needsUpdate = true;
-                geometry.computeVertexNormals();
-            }
-
-            function onResize() {
-                const rect = containerEl.getBoundingClientRect();
-                const w = rect.width;
-                const h = rect.height;
-                const aspect = w / h;
-                camera.aspect = aspect;
-                camera.updateProjectionMatrix();
-                renderer.setSize(w, h, false);
-                const newRadius = Math.min(w, h) * 0.3;
-                if (Math.abs(newRadius - radius) > 0.3) {
-                    radius = Math.max(newRadius, 1);
-                    const newGeo = createWaterCylinder(radius, height, radialSegments, heightSegments);
-                    originalPositions = new Float32Array(newGeo.userData.origPos);
-                    positions = newGeo.attributes.position.array;
-                    waterMesh.geometry.dispose();
-                    waterMesh.geometry = newGeo;
-                    geometry = newGeo;
-                }
-            }
-
-            function setupControls() {
-                let hasGyro = false;
-                document.addEventListener('mousemove', (e) => {
-                    if (!hasGyro) {
-                        const x = (e.clientX / window.innerWidth) * 2 - 1;
-                        const y = (e.clientY / window.innerHeight) * 2 - 1;
-                        targetTiltX = y * 1.8;
-                        targetTiltY = x * 1.8;
-                    }
-                }, { passive: true });
-
-                document.addEventListener('touchmove', (e) => {
-                    if (!hasGyro && e.touches.length > 0) {
-                        const touch = e.touches[0];
-                        const x = (touch.clientX / window.innerWidth) * 2 - 1;
-                        const y = (touch.clientY / window.innerHeight) * 2 - 1;
-                        targetTiltX = y * 1.5;
-                        targetTiltY = x * 1.5;
-                    }
-                }, { passive: true });
-
-                if (window.DeviceOrientationEvent) {
-                    const handleOrientation = (event) => {
-                        const beta = event.beta || 0;
-                        const gamma = event.gamma || 0;
-                        if (Math.abs(beta) > 0.3 || Math.abs(gamma) > 0.3) {
-                            hasGyro = true;
-                            const b = Math.max(-1, Math.min(1, beta / 45));
-                            const g = Math.max(-1, Math.min(1, gamma / 45));
-                            targetTiltX = b * 1.8;
-                            targetTiltY = g * 1.8;
-                        }
-                    };
-                    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                        const requestPermission = () => {
-                            DeviceOrientationEvent.requestPermission()
-                                .then(state => {
-                                    if (state === 'granted') {
-                                        window.addEventListener('deviceorientation', handleOrientation, { passive: true });
-                                    }
-                                });
-                            document.removeEventListener('click', requestPermission);
-                            document.removeEventListener('touchstart', requestPermission);
-                        };
-                        document.addEventListener('click', requestPermission, { once: true });
-                        document.addEventListener('touchstart', requestPermission, { once: true });
-                    } else {
-                        window.addEventListener('deviceorientation', handleOrientation, { passive: true });
-                    }
-                }
-            }
-
-            function animateWater() {
-                if (!renderer || !scene || !camera) {
-                    requestAnimationFrame(animateWater);
-                    return;
-                }
-
-                // ---- 弹簧物理 ----
-                const accelX = (targetTiltX - currentTiltX) * springStiffness;
-                const accelY = (targetTiltY - currentTiltY) * springStiffness;
-                velocityTiltX += accelX;
-                velocityTiltY += accelY;
-                velocityTiltX *= damping;
-                velocityTiltY *= damping;
-                currentTiltX += velocityTiltX;
-                currentTiltY += velocityTiltY;
-
-                const mag = Math.sqrt(currentTiltX * currentTiltX + currentTiltY * currentTiltY);
-                if (mag > maxTiltAngle) {
-                    const scale = maxTiltAngle / mag;
-                    currentTiltX *= scale;
-                    currentTiltY *= scale;
-                }
-
-                // ---- 更新顶点 ----
-                const time = Date.now() * 0.001;
-                waveTime += 0.02;
-                updateWaterVertices(time);
-
-                renderer.render(scene, camera);
-                requestAnimationFrame(animateWater);
-            }
-
-            // ---- 启动 ----
-            function start() {
-                if (typeof THREE === 'undefined') {
-                    setTimeout(start, 500);
-                    return;
-                }
-                initWater();
-                console.log('✅ 侧面水体已启动');
-            }
-
-            if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                setTimeout(start, 100);
+                timer = setTimeout(typeEffect, 80 + Math.random() * 40);
             } else {
-                document.addEventListener('DOMContentLoaded', () => setTimeout(start, 100));
+                el.textContent = current.slice(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    timer = setTimeout(typeEffect, 400);
+                    return;
+                }
+                timer = setTimeout(typeEffect, 40 + Math.random() * 30);
             }
-            window.addEventListener('load', () => {
-                if (!waterMesh) start();
+        }
+        typeEffect();
+
+        const container = document.querySelector('.container');
+        let mouseX = 0,
+            mouseY = 0;
+        let currentX = 0,
+            currentY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+            mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+        });
+
+        function animateGlow() {
+            currentX += (mouseX - currentX) * 0.06;
+            currentY += (mouseY - currentY) * 0.06;
+
+            const rotateX = currentY * 3;
+            const rotateY = currentX * 3;
+            container.style.transform =
+                `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1)`;
+
+            const glowX = 50 + currentX * 30;
+            const glowY = 50 + currentY * 30;
+            container.style.setProperty('--glow-pos', `${glowX}% ${glowY}%`);
+
+            requestAnimationFrame(animateGlow);
+        }
+
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            animateGlow();
+        }
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                card.style.setProperty('--rx', `${x * 4}deg`);
+                card.style.setProperty('--ry', `${-y * 4}deg`);
+                card.style.transform =
+                    `translateY(-8px) scale(1.01) perspective(800px) rotateX(${y * 4}deg) rotateY(${-x * 4}deg)`;
             });
-        })();
-    </script>
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        const qzoneLink = document.getElementById('qzone-link');
+        let toastTimer = null;
+
+        function showToast(message, icon = '🐧') {
+            const existing = document.querySelector('.toast-container');
+            if (existing) existing.remove();
+            if (toastTimer) clearTimeout(toastTimer);
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-container';
+            toast.innerHTML = `
+                <span class="toast-icon">${icon}</span>
+                <span class="toast-message">${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) toast.remove();
+                }, 350);
+            }, 2800);
+        }
+
+        qzoneLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast('QQ空间暂不可用，请稍后再试', '🐧');
+        });
+
+    })();
+</script>
 </body>
 </html>
