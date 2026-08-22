@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zxjy_Polaris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', 'PingFang SC', -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            padding: 24px;
+            margin: 0;
+        }
+
+        .card {
+            max-width: 560px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 48px 40px 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+            text-align: center;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .avatar-wrap {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            border: 2px solid #e8eaed;
+            flex-shrink: 0;
+        }
+
+        .avatar-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 400;
+            color: #202124;
+            letter-spacing: -0.2px;
+            margin-bottom: 4px;
+        }
+
+        .sub-title {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5f6368;
+            margin-bottom: 32px;
+            letter-spacing: 0.2px;
+        }
+
+        .steps {
+            text-align: left;
+            margin-bottom: 36px;
+            padding: 0 4px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background: #e8f0fe;
+            color: #1a73e8;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .step-content h4 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 2px;
+            letter-spacing: 0.1px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            font-weight: 400;
+            color: #5f6368;
+            line-height: 1.5;
+        }
+
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 32px;
+            min-height: 44px;
+            border: none;
+            border-radius: 24px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-decoration: none;
+            background: transparent;
+            color: #1a73e8;
+            transition: background 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-primary {
+            background: #1a73e8;
+            color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+        .btn-primary:hover {
+            background: #1b66c9;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.25);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #1a73e8;
+        }
+        .btn-secondary:hover {
+            background: rgba(26, 115, 232, 0.04);
+        }
+
+        .btn-link {
+            display: inline-block;
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .btn-link:hover {
+            background: rgba(26, 115, 232, 0.04);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+
+        .btn-secondary .ripple,
+        .btn-link .ripple {
+            background: rgba(26, 115, 232, 0.15);
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .footer-note {
+            margin-top: 32px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #5f6368;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 20px 28px;
+                border-radius: 24px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .avatar-wrap {
+                width: 72px;
+                height: 72px;
+            }
+
+            .step-item {
+                gap: 14px;
+                padding: 10px 0;
+            }
+
+            .step-num {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .step-content h4 {
+                font-size: 15px;
+            }
+
+            .step-content p {
+                font-size: 13px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .card {
+            opacity: 0;
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(18px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* --- Android 原生弹窗样式 --- */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .dialog-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dialog-box {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 24px 28px 20px;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: left;
+        }
+
+        .dialog-overlay.active .dialog-box {
+            transform: scale(1);
+        }
+
+        .dialog-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .dialog-message {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5f6368;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .dialog-btn {
+            padding: 8px 16px;
+            min-height: 36px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: #1a73e8;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-transform: uppercase;
+        }
+
+        .dialog-btn:hover {
+            background: rgba(26, 115, 232, 0.04);
+        }
+
+        .dialog-btn:active {
+            background: rgba(26, 115, 232, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="avatar-wrap">
+            <img
+                src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487"
+                alt="头像"
+                loading="lazy"
+            />
+        </div>
+
+        <h1 class="title">感谢使用本软件</h1>
+        <p class="sub-title">您已成功安装 Polaris，请按下方指引开始使用</p>
+
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>启动软件</h4>
+                    <p>双击桌面快捷方式或从开始菜单中打开软件</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>登录 / 授权</h4>
+                    <p>点击「Login」按钮登录后，输入密码进入软件协议页面</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>开始使用</h4>
+                    <p>认真阅读软件协议后，即可开始使用</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4>遇到问题？</h4>
+                    <p>查看内置帮助文档，或通过下方链接获取支持</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-row">
+            <a href="https://zxjy.pages.dev" class="btn btn-primary" id="primaryBtn">打开主页</a>
+            <a href="#" class="btn btn-secondary" id="secondaryBtn">查看帮助文档</a>
+        </div>
+
+        <div class="footer-note">
+            需要帮助？联系
+            <a href="mailto:zxjy0506@gmail.com" class="btn-link" id="emailLink">zxjy0506@gmail.com</a>
+        </div>
+    </div>
+
+    <div class="dialog-overlay" id="dialogOverlay">
+        <div class="dialog-box">
+            <div class="dialog-title">提示</div>
+            <div class="dialog-message">自己摸索去</div>
+            <div class="dialog-actions">
+                <button class="dialog-btn" id="dialogConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const rippleElements = document.querySelectorAll('.btn, .btn-link');
+
+            function createRipple(e) {
+                if (this.disabled) return;
+
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+
+                const size = Math.max(rect.width, rect.height) * 2;
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (x - size / 2) + 'px';
+                ripple.style.top = (y - size / 2) + 'px';
+
+                this.appendChild(ripple);
+
+                ripple.addEventListener('animationend', function() {
+                    this.remove();
+                });
+            }
+
+            rippleElements.forEach(el => {
+                el.addEventListener('mousedown', createRipple);
+                el.addEventListener('touchstart', createRipple, { passive: true });
+            });
+
+            const dialogOverlay = document.getElementById('dialogOverlay');
+            const confirmBtn = document.getElementById('dialogConfirm');
+            const helpBtn = document.getElementById('secondaryBtn');
+
+            function showDialog() {
+                dialogOverlay.classList.add('active');
+            }
+
+            function hideDialog() {
+                dialogOverlay.classList.remove('active');
+            }
+
+            helpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                showDialog();
+            });
+
+            confirmBtn.addEventListener('click', hideDialog);
+
+            dialogOverlay.addEventListener('click', function(e) {
+                if (e.target === dialogOverlay) {
+                    hideDialog();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && dialogOverlay.classList.contains('active')) {
+                    hideDialog();
+                }
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
