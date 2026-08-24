@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载文件</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', 'PingFang SC', -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #e8edf5 0%, #d5dce6 100%);
+            padding: 24px;
+            margin: 0;
+        }
+
+        .card {
+            max-width: 480px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 12px 48px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: box-shadow 0.25s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10), 0 16px 56px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ---- 品牌标识 (居中) ---- */
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 20px 4px 20px;
+        }
+
+        .brand img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #e8eaed;
+        }
+
+        .brand span {
+            font-size: 18px;
+            font-weight: 500;
+            color: #202124;
+            letter-spacing: -0.2px;
+        }
+
+        /* ---- 顶部线条进度条 ---- */
+        .progress-bar {
+            height: 3px;
+            background: #e8eaed;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-bar.active {
+            opacity: 1;
+        }
+
+        .progress-bar .line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: #1a73e8;
+            border-radius: 2px;
+            animation: slideLine 1.5s ease-in-out infinite;
+        }
+
+        .progress-bar.error .line {
+            background: #d93025;
+        }
+
+        @keyframes slideLine {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+
+        /* ---- 卡片内容 ---- */
+        .card-content {
+            padding: 8px 32px 32px;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page {
+            display: none;
+            animation: pageSlideIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(30px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .page-loading,
+        .page-downloading {
+            text-align: center;
+            color: #5f6368;
+            padding: 16px 0;
+        }
+
+        .page-loading i,
+        .page-downloading i {
+            margin-right: 8px;
+        }
+
+        .page-downloading .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #e8eaed;
+            border-top-color: #1a73e8;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .page-error {
+            text-align: center;
+            color: #d93025;
+            padding: 16px 0;
+        }
+
+        .page-error i {
+            margin-right: 8px;
+        }
+
+        .file-icon {
+            font-size: 4.5rem;
+            color: #1a73e8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .file-name {
+            font-size: 24px;
+            font-weight: 400;
+            color: #202124;
+            letter-spacing: -0.2px;
+            word-break: break-word;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .file-detail {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5f6368;
+            margin: 4px 0;
+            text-align: center;
+        }
+
+        .file-detail span {
+            font-weight: 500;
+            color: #202124;
+        }
+
+        .security-warning {
+            background: #fef7e0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 18px 0 14px;
+            text-align: left;
+            font-size: 14px;
+            color: #5f3b00;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border-left: 4px solid #f9ab00;
+        }
+
+        .security-warning i {
+            color: #f9ab00;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .security-warning strong {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        /* 主按钮 */
+        .btn-primary {
+            display: inline-block;
+            background: #1a73e8;
+            color: #ffffff;
+            padding: 10px 32px;
+            min-height: 44px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            margin-top: 12px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background: #1b66c9;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.25);
+        }
+
+        /* 次要按钮（返回） */
+        .btn-secondary {
+            display: inline-block;
+            background: #f1f3f4;
+            color: #1a5faf;
+            padding: 10px 32px;
+            min-height: 44px;
+            border: 1px solid #dadce0;
+            border-radius: 12px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+            margin-top: 12px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background: #e8eaed;
+            border-color: #c5c8cd;
+        }
+
+        .btn-secondary-error {
+            background: #fef0f0;
+            color: #b71c1c;
+            border-color: #f5c6c6;
+        }
+
+        .btn-secondary-error:hover {
+            background: #fce4e4;
+            border-color: #eab0b0;
+        }
+
+        @media (max-width: 480px) {
+            .brand {
+                padding: 12px 16px 2px 16px;
+            }
+            .brand img {
+                width: 28px;
+                height: 28px;
+            }
+            .brand span {
+                font-size: 16px;
+            }
+            .card-content {
+                padding: 4px 20px 24px;
+            }
+            .file-icon {
+                font-size: 3.5rem;
+            }
+            .file-name {
+                font-size: 20px;
+            }
+            .file-detail {
+                font-size: 14px;
+            }
+            .btn-primary,
+            .btn-secondary {
+                font-size: 15px;
+                padding: 10px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="downloadCard">
+        <!-- 品牌标识（居中） -->
+        <div class="brand">
+            <img src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487" alt="Zxjy" loading="lazy" />
+            <span>Zxjy_Download</span>
+        </div>
+
+        <!-- 顶部进度条 -->
+        <div class="progress-bar" id="progressBar">
+            <div class="line"></div>
+        </div>
+
+        <div class="card-content" id="cardContent">
+            <div id="pageContainer">
+                <div class="page active" id="pageLoading">
+                    <div class="page-loading">
+                        <i class="fas fa-spinner fa-spin"></i> 加载中...
+                    </div>
+                </div>
+                <div class="page" id="pageError">
+                    <div class="page-error">
+                        <i class="fas fa-exclamation-triangle"></i> <span id="errorMsg">错误</span>
+                    </div>
+                    <a href="/Cloud%20Storage" class="btn-secondary btn-secondary-error" id="errorBackBtn">返回云存储</a>
+                </div>
+                <div class="page" id="pageFile">
+                    <!-- 动态填充 -->
+                </div>
+                <div class="page" id="pageDownloading">
+                    <div class="page-downloading">
+                        <span class="spinner"></span>
+                        正在准备下载，请稍候...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ========== 修复：完整获取 file 参数（支持未编码的 URL） ==========
+            function getFileParam() {
+                const href = window.location.href;
+                const fileIdx = href.indexOf('?file=');
+                if (fileIdx === -1) return null;
+                let raw = href.substring(fileIdx + 6);
+                // 去掉锚点（如果有）
+                const hashIdx = raw.indexOf('#');
+                if (hashIdx !== -1) raw = raw.substring(0, hashIdx);
+                // 如果 raw 以 '&' 开头，说明后面还有额外参数，但这种情况我们保留全部作为 file 值。
+                // 注意：如果 URL 中还有其他参数（如 &a=1），它们会包含在 raw 中，但这是用户的问题，我们不处理。
+                return raw;
+            }
+
+            const fileParam = getFileParam();
+
+            // ========== 以下为原有逻辑 ==========
+
+            const progressBar = document.getElementById('progressBar');
+            const pageLoading = document.getElementById('pageLoading');
+            const pageError = document.getElementById('pageError');
+            const pageFile = document.getElementById('pageFile');
+            const pageDownloading = document.getElementById('pageDownloading');
+            const errorMsg = document.getElementById('errorMsg');
+
+            function showPage(pageId) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(pageId);
+                if (target) {
+                    target.classList.remove('active');
+                    void target.offsetWidth;
+                    target.classList.add('active');
+                }
+            }
+
+            function showError(message) {
+                errorMsg.textContent = message;
+                showPage('pageError');
+                progressBar.classList.add('active');
+                progressBar.classList.add('error');
+            }
+
+            function resetProgressBar() {
+                progressBar.classList.remove('error');
+            }
+
+            function triggerDownload(downloadUrl, fileName) {
+                resetProgressBar();
+                showPage('pageDownloading');
+                progressBar.classList.add('active');
+
+                const timer = setTimeout(() => {
+                    progressBar.classList.remove('active');
+
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    showPage('pageFile');
+                }, 3500);
+            }
+
+            function showFile(fileInfo) {
+                resetProgressBar();
+                progressBar.classList.remove('active');
+
+                const iconMap = {
+                    'exe': 'fa-windows',
+                    'apk': 'fa-android',
+                    'pdf': 'fa-file-pdf',
+                    'image': 'fa-file-image',
+                    'doc': 'fa-file-word',
+                    'zip': 'fa-file-archive',
+                    'video': 'fa-file-video',
+                    'audio': 'fa-file-audio',
+                    'txt': 'fa-file-alt',
+                    'default': 'fa-file'
+                };
+                const iconClass = iconMap[fileInfo.type] || iconMap['default'];
+                const iconStyle = fileInfo.iconStyle || 'fab';
+
+                let securityHtml = '';
+                if (fileInfo.type === 'exe' || fileInfo.type === 'apk') {
+                    const warningMsg = fileInfo.type === 'exe' ?
+                        '您正在下载一个 Windows 可执行文件 (.exe)。请确保您信任此文件的来源。' :
+                        '您正在下载一个 Android 应用安装包 (.apk)。请确保您信任此文件的来源。';
+                    securityHtml = `
+                        <div class="security-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div><strong>安全提醒</strong>${warningMsg}</div>
+                        </div>
+                    `;
+                }
+
+                const downloadUrl = fileInfo.isExternal ? fileInfo.url : fileInfo.path;
+
+                pageFile.innerHTML = `
+                    <div class="file-icon"><i class="${iconStyle} ${iconClass}"></i></div>
+                    <div class="file-name">${fileInfo.name}</div>
+                    <div class="file-detail">大小：<span>${fileInfo.size || '未知'}</span></div>
+                    <div class="file-detail">日期：<span>${fileInfo.date || '未知'}</span></div>
+                    <div class="file-detail">类型：<span>${fileInfo.type ? fileInfo.type.toUpperCase() : '未知'}</span></div>
+                    ${securityHtml}
+                    <button class="btn-primary" id="downloadBtn">立即下载</button>
+                    <a href="/Cloud%20Storage" class="btn-secondary" id="backBtn">返回云存储</a>
+                `;
+
+                document.getElementById('downloadBtn').addEventListener('click', function() {
+                    triggerDownload(downloadUrl, fileInfo.name);
+                });
+
+                showPage('pageFile');
+            }
+
+            // 主逻辑
+            progressBar.classList.add('active');
+            resetProgressBar();
+
+            if (!fileParam) {
+                showError('未指定文件');
+                return;
+            }
+
+            const isExternalUrl = fileParam.startsWith('http://') || fileParam.startsWith('https://');
+
+            if (isExternalUrl) {
+                const url = fileParam;
+                document.querySelector('#pageLoading .page-loading').innerHTML =
+                    '<i class="fas fa-spinner fa-spin"></i> 正在检测链接有效性...';
+
+                fetch(url, { method: 'HEAD', mode: 'cors' })
+                    .then(response => {
+                        if (response.ok) {
+                            const fileName = url.split('/').pop() || '下载文件';
+                            const ext = fileName.split('.').pop().toLowerCase();
+                            const typeMap = {
+                                'exe': 'exe', 'apk': 'apk', 'pdf': 'pdf',
+                                'jpg': 'image', 'jpeg': 'image', 'png': 'image', 'gif': 'image',
+                                'zip': 'zip', 'rar': 'zip', '7z': 'zip',
+                                'mp4': 'video', 'mkv': 'video',
+                                'mp3': 'audio', 'wav': 'audio',
+                                'txt': 'txt', 'doc': 'doc', 'docx': 'doc'
+                            };
+                            const fileType = typeMap[ext] || 'default';
+
+                            const contentLength = response.headers.get('content-length');
+                            let size = '未知';
+                            if (contentLength) {
+                                const bytes = parseInt(contentLength);
+                                if (bytes > 1024 * 1024) {
+                                    size = (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+                                } else if (bytes > 1024) {
+                                    size = (bytes / 1024).toFixed(2) + ' KB';
+                                } else {
+                                    size = bytes + ' B';
+                                }
+                            }
+
+                            const fileInfo = {
+                                name: fileName,
+                                size: size,
+                                date: '未知',
+                                type: fileType,
+                                icon: fileType === 'exe' ? 'windows' : (fileType === 'apk' ? 'android' : 'file'),
+                                iconStyle: (fileType === 'exe' || fileType === 'apk') ? 'fab' : 'fas',
+                                path: url,
+                                isExternal: true,
+                                url: url
+                            };
+
+                            setTimeout(() => showFile(fileInfo), 300);
+                        } else {
+                            showError('链接无效或文件不存在 (HTTP ' + response.status + ')');
+                        }
+                    })
+                    .catch(err => {
+                        console.warn('检测外部链接失败:', err);
+                        showError('无法访问该链接，可能是跨域限制或链接已失效');
+                    });
+            } else {
+                fetch('/files.json', { cache: 'no-cache' })
+                    .then(res => {
+                        if (!res.ok) throw new Error('无法获取文件列表');
+                        return res.json();
+                    })
+                    .then(files => {
+                        const decodedName = decodeURIComponent(fileParam);
+                        const file = files.find(f => f.name === decodedName);
+                        if (!file) {
+                            showError(`文件 "${decodedName}" 不存在`);
+                            return;
+                        }
+                        const fileInfo = {
+                            name: file.name,
+                            size: file.size || '未知',
+                            date: file.date || '未知',
+                            type: file.type || 'default',
+                            icon: file.icon || 'file',
+                            iconStyle: file.iconStyle || 'fas',
+                            path: file.path || './' + file.name,
+                            isExternal: false
+                        };
+                        setTimeout(() => showFile(fileInfo), 300);
+                    })
+                    .catch(err => showError('加载文件列表失败：' + err.message));
+            }
+        })();
+    </script>
+
+</body>
+</html>
