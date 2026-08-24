@@ -41,7 +41,6 @@
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10), 0 16px 56px rgba(0, 0, 0, 0.06);
         }
 
-        /* ---- 品牌标识 (居中) ---- */
         .brand {
             display: flex;
             align-items: center;
@@ -65,7 +64,6 @@
             letter-spacing: -0.2px;
         }
 
-        /* ---- 顶部线条进度条 ---- */
         .progress-bar {
             height: 3px;
             background: #e8eaed;
@@ -99,7 +97,6 @@
             100% { left: 100%; }
         }
 
-        /* ---- 卡片内容 ---- */
         .card-content {
             padding: 8px 32px 32px;
             min-height: 280px;
@@ -221,7 +218,6 @@
             margin-bottom: 2px;
         }
 
-        /* 主按钮 */
         .btn-primary {
             display: inline-block;
             background: #1a73e8;
@@ -248,7 +244,6 @@
             box-shadow: 0 2px 8px rgba(26, 115, 232, 0.25);
         }
 
-        /* 次要按钮（返回） */
         .btn-secondary {
             display: inline-block;
             background: #f1f3f4;
@@ -319,13 +314,11 @@
 <body>
 
     <div class="card" id="downloadCard">
-        <!-- 品牌标识（居中） -->
         <div class="brand">
             <img src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487" alt="Zxjy" loading="lazy" />
             <span>Zxjy_Download</span>
         </div>
 
-        <!-- 顶部进度条 -->
         <div class="progress-bar" id="progressBar">
             <div class="line"></div>
         </div>
@@ -344,7 +337,6 @@
                     <a href="/Cloud%20Storage" class="btn-secondary btn-secondary-error" id="errorBackBtn">返回云存储</a>
                 </div>
                 <div class="page" id="pageFile">
-                    <!-- 动态填充 -->
                 </div>
                 <div class="page" id="pageDownloading">
                     <div class="page-downloading">
@@ -360,23 +352,17 @@
         (function() {
             'use strict';
 
-            // ========== 修复：完整获取 file 参数（支持未编码的 URL） ==========
             function getFileParam() {
                 const href = window.location.href;
                 const fileIdx = href.indexOf('?file=');
                 if (fileIdx === -1) return null;
                 let raw = href.substring(fileIdx + 6);
-                // 去掉锚点（如果有）
                 const hashIdx = raw.indexOf('#');
                 if (hashIdx !== -1) raw = raw.substring(0, hashIdx);
-                // 如果 raw 以 '&' 开头，说明后面还有额外参数，但这种情况我们保留全部作为 file 值。
-                // 注意：如果 URL 中还有其他参数（如 &a=1），它们会包含在 raw 中，但这是用户的问题，我们不处理。
                 return raw;
             }
 
             const fileParam = getFileParam();
-
-            // ========== 以下为原有逻辑 ==========
 
             const progressBar = document.getElementById('progressBar');
             const pageLoading = document.getElementById('pageLoading');
@@ -477,7 +463,6 @@
                 showPage('pageFile');
             }
 
-            // 主逻辑
             progressBar.classList.add('active');
             resetProgressBar();
 
