@@ -13,11 +13,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-
-        html {
-            font-size: 16px;
-        }
-
+        html { font-size: 16px; }
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
@@ -26,38 +22,18 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; padding: 10px; }
         header {
             text-align: center;
             margin-bottom: 20px;
             padding: 15px;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255,255,255,0.95);
             border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             backdrop-filter: blur(10px);
         }
-
-        h1 {
-            color: #2c3e50;
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 0.95rem;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
+        h1 { color: #2c3e50; font-size: 1.8rem; margin-bottom: 8px; line-height: 1.3; }
+        .subtitle { color: #7f8c8d; font-size: 0.95rem; max-width: 800px; margin: 0 auto; line-height: 1.5; }
         .storage-info {
             display: flex;
             flex-direction: column;
@@ -69,50 +45,25 @@
             border-radius: 8px;
             font-size: 0.95rem;
         }
-
-        .storage-bar {
-            height: 8px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-
-        .storage-used {
-            height: 100%;
-            width: 65%;
-            background: linear-gradient(90deg, #2ecc71, #1abc9c);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
+        .storage-bar { height: 8px; background-color: rgba(255,255,255,0.3); border-radius: 4px; margin-top: 8px; overflow: hidden; }
+        .storage-used { height: 100%; width: 65%; background: linear-gradient(90deg, #2ecc71, #1abc9c); border-radius: 4px; transition: width 0.5s ease; }
 
         .search-section {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255,255,255,0.95);
             border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
-
         .search-header {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 15px;
         }
-
-        .search-header h2 {
-            color: #2c3e50;
-            font-size: 1.4rem;
-        }
-
-        .search-header .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
+        .search-header h2 { color: #2c3e50; font-size: 1.4rem; }
+        .search-header .toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
         .refresh-btn {
             background-color: #2ecc71;
             color: white;
@@ -127,37 +78,13 @@
             gap: 6px;
             transition: background-color 0.3s ease;
         }
+        .refresh-btn:hover { background-color: #27ae60; }
+        .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .refresh-btn .fa-spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .refresh-btn:hover {
-            background-color: #27ae60;
-        }
-
-        .refresh-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .refresh-btn .fa-spinner {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .search-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .search-box {
-            width: 100%;
-            position: relative;
-        }
-
+        .search-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
+        .search-box { width: 100%; position: relative; }
         .search-input {
             width: 100%;
             padding: 14px 15px 14px 45px;
@@ -167,29 +94,19 @@
             transition: all 0.3s ease;
             background-color: #f9f9f9;
         }
-
         .search-input:focus {
             outline: none;
             border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
             background-color: white;
         }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #7f8c8d;
-        }
-
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #7f8c8d; }
         .search-filters {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             width: 100%;
         }
-
         .filter-select {
             padding: 12px;
             border: 1px solid #dfe6e9;
@@ -207,14 +124,12 @@
             background-size: 16px;
             padding-right: 35px;
         }
-
         .filter-select:focus {
             outline: none;
             border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
             background-color: white;
         }
-
         .search-btn {
             background-color: #3498db;
             color: white;
@@ -230,15 +145,8 @@
             transition: background-color 0.3s ease;
             width: 100%;
         }
-
-        .search-btn:hover {
-            background-color: #2980b9;
-        }
-
-        .search-btn i {
-            margin-right: 8px;
-        }
-
+        .search-btn:hover { background-color: #2980b9; }
+        .search-btn i { margin-right: 8px; }
         .search-results-info {
             padding: 12px;
             background-color: #f8f9fa;
@@ -248,11 +156,7 @@
             gap: 10px;
             margin-top: 10px;
         }
-
-        .search-results-info.hidden {
-            display: none;
-        }
-
+        .search-results-info.hidden { display: none; }
         .clear-search-btn {
             background-color: #e74c3c;
             color: white;
@@ -265,21 +169,16 @@
             transition: background-color 0.3s ease;
             width: 100%;
         }
+        .clear-search-btn:hover { background-color: #c0392b; }
 
-        .clear-search-btn:hover {
-            background-color: #c0392b;
-        }
-
-        /* ===== 文件列表 ===== */
         .file-container {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255,255,255,0.95);
             border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
-
         .file-header {
             display: flex;
             flex-direction: column;
@@ -288,12 +187,7 @@
             padding-bottom: 10px;
             border-bottom: 1px solid #ecf0f1;
         }
-
-        .file-header h2 {
-            color: #2c3e50;
-            font-size: 1.4rem;
-        }
-
+        .file-header h2 { color: #2c3e50; font-size: 1.4rem; }
         .file-count {
             background-color: #3498db;
             color: white;
@@ -303,30 +197,26 @@
             font-size: 0.9rem;
             align-self: flex-start;
         }
-
         .file-list {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
         }
-
         .file-card {
             background-color: white;
             border-radius: 8px;
             padding: 15px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-left: 4px solid #3498db;
             display: flex;
             align-items: flex-start;
             position: relative;
         }
-
         .file-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
         }
-
         .file-icon {
             width: 42px;
             height: 42px;
@@ -338,7 +228,6 @@
             font-size: 1.2rem;
             flex-shrink: 0;
         }
-
         .pdf { background-color: #ffebe6; color: #e74c3c; border-left-color: #e74c3c; }
         .image { background-color: #e6f7ff; color: #3498db; border-left-color: #3498db; }
         .doc { background-color: #e6ffe6; color: #27ae60; border-left-color: #27ae60; }
@@ -350,11 +239,7 @@
         .exe { background-color: #0078d7; color: white; border-left-color: #0078d7; }
         .apk { background-color: #3ddc84; color: white; border-left-color: #3ddc84; }
 
-        .file-info {
-            flex-grow: 1;
-            min-width: 0;
-        }
-
+        .file-info { flex-grow: 1; min-width: 0; }
         .file-name {
             font-weight: 600;
             margin-bottom: 4px;
@@ -363,7 +248,6 @@
             font-size: 0.95rem;
             line-height: 1.3;
         }
-
         .file-details {
             font-size: 0.8rem;
             color: #7f8c8d;
@@ -372,7 +256,6 @@
             flex-wrap: wrap;
             gap: 5px;
         }
-
         .download-btn {
             background-color: #3498db;
             color: white;
@@ -390,26 +273,9 @@
             flex-shrink: 0;
             margin-left: 10px;
         }
-
-        .download-btn:hover:not(:disabled) {
-            background-color: #2980b9;
-        }
-
-        .download-btn:disabled {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .download-btn i {
-            margin-right: 5px;
-            font-size: 0.9rem;
-        }
-
-        .downloading {
-            background-color: #7f8c8d;
-            cursor: not-allowed;
-        }
+        .download-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .download-btn:disabled { background-color: #95a5a6; cursor: not-allowed; opacity: 0.7; }
+        .download-btn i { margin-right: 5px; font-size: 0.9rem; }
 
         .file-check-status {
             font-size: 0.7rem;
@@ -418,17 +284,8 @@
             margin-left: 5px;
             display: inline-block;
         }
-
-        .status-available {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-unavailable {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
+        .status-available { background-color: #d4edda; color: #155724; }
+        .status-unavailable { background-color: #f8d7da; color: #721c24; }
         .security-warning {
             font-size: 0.7rem;
             padding: 3px 6px;
@@ -441,15 +298,14 @@
         }
 
         .upload-section {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255,255,255,0.95);
             border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 20px;
             text-align: center;
             backdrop-filter: blur(10px);
         }
-
         .upload-btn {
             background-color: #2ecc71;
             color: white;
@@ -466,201 +322,21 @@
             margin-top: 12px;
             width: 100%;
         }
+        .upload-btn:hover { background-color: #27ae60; }
+        .upload-btn i { margin-right: 8px; }
 
-        .upload-btn:hover {
-            background-color: #27ae60;
-        }
-
-        .upload-btn i {
-            margin-right: 8px;
-        }
-        .download-animation {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .download-animation.active {
-            display: flex;
-        }
-
-        .download-content {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #ecf0f1;
-            border-top: 6px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        .download-progress {
-            height: 8px;
-            background-color: #ecf0f1;
-            border-radius: 4px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .download-status {
-            font-size: 1.1rem;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .download-file-name {
-            font-weight: 600;
-            color: #3498db;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            word-break: break-word;
-        }
-
-        .security-confirmation {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            text-align: left;
-        }
-
-        .security-confirmation h4 {
-            color: #856404;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-        .security-confirmation h4 i {
-            margin-right: 8px;
-        }
-
-        .security-confirmation p {
-            font-size: 0.9rem;
-            color: #856404;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .security-confirmation label {
-            display: flex;
-            align-items: flex-start;
-            font-size: 0.85rem;
-            color: #856404;
-            margin-bottom: 12px;
-            cursor: pointer;
-            line-height: 1.4;
-        }
-
-        .security-confirmation input[type="checkbox"] {
-            margin-right: 8px;
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-
-        .security-confirmation-buttons {
-            display: flex;
-            gap: 8px;
-            justify-content: flex-end;
-        }
-
-        .confirm-download-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .confirm-download-btn:hover:not(:disabled) {
-            background-color: #218838;
-        }
-
-        .confirm-download-btn:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .cancel-download-btn {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .cancel-download-btn:hover {
-            background-color: #5a6268;
-        }
         .checking-files {
             text-align: center;
             padding: 15px;
             margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255,255,255,0.95);
             border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             backdrop-filter: blur(10px);
         }
-
-        .checking-files.hidden {
-            display: none;
-        }
-
-        .file-check-progress {
-            height: 5px;
-            background-color: #ecf0f1;
-            border-radius: 3px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .file-check-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
+        .checking-files.hidden { display: none; }
+        .file-check-progress { height: 5px; background-color: #ecf0f1; border-radius: 3px; margin-top: 10px; overflow: hidden; }
+        .file-check-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #3498db, #2ecc71); border-radius: 3px; transition: width 0.3s ease; }
 
         .no-results {
             text-align: center;
@@ -669,12 +345,7 @@
             font-size: 1rem;
             grid-column: 1 / -1;
         }
-
-        .no-results i {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #bdc3c7;
-        }
+        .no-results i { font-size: 2.5rem; margin-bottom: 15px; color: #bdc3c7; }
 
         .error-message {
             background-color: #f8d7da;
@@ -685,10 +356,7 @@
             display: none;
             font-size: 0.9rem;
         }
-
-        .error-message.active {
-            display: block;
-        }
+        .error-message.active { display: block; }
 
         .data-source-info {
             font-size: 0.75rem;
@@ -704,12 +372,9 @@
             font-size: 0.8rem;
             margin-top: 20px;
         }
+        .github-link { color: #3498db; text-decoration: none; font-weight: 600; }
 
-        .github-link {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 600;
-        }
+        /* responsive */
         @media (min-width: 600px) {
             html { font-size: 17px; }
             body { padding: 15px; }
@@ -726,19 +391,15 @@
             .upload-btn { width: auto; }
             .search-header { flex-direction: row; justify-content: space-between; align-items: center; }
         }
-
         @media (min-width: 900px) {
             html { font-size: 18px; }
             body { padding: 20px; }
             .container { padding: 20px; }
             .file-list { grid-template-columns: repeat(3, 1fr); }
-            .download-content { padding: 30px; }
         }
-
         @media (min-width: 1200px) {
             .file-list { grid-template-columns: repeat(4, 1fr); }
         }
-
         @media (max-width: 350px) {
             html { font-size: 15px; }
             .file-card { flex-direction: column; align-items: flex-start; }
@@ -746,13 +407,10 @@
             .file-icon { margin-bottom: 10px; }
             .search-filters { grid-template-columns: 1fr; }
         }
-
         @media (orientation: landscape) and (max-height: 500px) {
             .search-filters { grid-template-columns: repeat(2, 1fr); }
             .file-list { grid-template-columns: repeat(2, 1fr); }
-            .download-content { max-width: 90%; padding: 20px; }
         }
-
         @media (hover: none) and (pointer: coarse) {
             .file-card:hover { transform: none; }
             .download-btn, .search-btn, .upload-btn, .filter-select { min-height: 44px; }
@@ -767,9 +425,7 @@
             <div class="storage-info">
                 <div>
                     <span>已使用: <strong id="usedSpace">-1 GB</strong> / <span id="totalSpace">10 GB</span></span>
-                    <div class="storage-bar">
-                        <div class="storage-used" id="storageBar" style="width:65%"></div>
-                    </div>
+                    <div class="storage-bar"><div class="storage-used" id="storageBar" style="width:65%"></div></div>
                 </div>
                 <div>
                     <span>剩余空间: <strong id="remainingSpace">-1 GB</strong></span>
@@ -858,9 +514,7 @@
                     <h2><i class="fas fa-folder-open"></i> 我的文件</h2>
                     <div class="file-count" id="fileCount">0 个文件</div>
                 </div>
-                <div class="file-list" id="fileList">
-                    <!-- 文件通过 JavaScript 动态生成 -->
-                </div>
+                <div class="file-list" id="fileList"></div>
                 <div class="data-source-info" id="dataSourceInfo">数据源: 加载中...</div>
             </div>
         </main>
@@ -869,38 +523,6 @@
             <p>此云存储库部署于 <a href="https://github.com" class="github-link" target="_blank">GitHub Pages</a> | 最后更新: 2025年12月</p>
             <p style="margin-top: 10px;">© 2025 Zxjy云存储库</p>
         </footer>
-    </div>
-
-    <div class="download-animation" id="downloadAnimation">
-        <div class="download-content">
-            <div class="spinner"></div>
-            <div class="download-status" id="downloadStatus">正在检查文件...</div>
-            <div class="download-file-name" id="downloadFileName">文件名.exe</div>
-            <div class="download-progress">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <p id="downloadDetails">文件大小: 0 MB | 已下载: 0 MB</p>
-
-            <div class="security-confirmation" id="securityConfirmation" style="display: none;">
-                <h4><i class="fas fa-exclamation-triangle"></i> 安全警告</h4>
-                <p id="securityWarningText">您正在下载一个可执行文件。请确保您信任此文件的来源。</p>
-                <label>
-                    <input type="checkbox" id="securityCheckbox"> 我了解风险并确认要继续下载
-                </label>
-                <div class="security-confirmation-buttons">
-                    <button class="cancel-download-btn" id="cancelSecurityDownloadBtn">
-                        <i class="fas fa-times"></i> 取消
-                    </button>
-                    <button class="confirm-download-btn" id="confirmDownloadBtn" disabled>
-                        <i class="fas fa-check"></i> 确认下载
-                    </button>
-                </div>
-            </div>
-
-            <button class="download-btn" id="cancelDownload" style="margin-top: 20px;">
-                <i class="fas fa-times"></i> 取消下载
-            </button>
-        </div>
     </div>
 
     <script>
@@ -918,7 +540,7 @@
         ];
 
         let fileList = [];
-        let fileAvailability = {}; // { id: true/false }
+        let fileAvailability = {};
         let currentDisplayedFiles = [];
         let isSearching = false;
         let currentSearchQuery = "";
@@ -926,9 +548,6 @@
         let currentSizeFilter = "";
         let currentDateFilter = "";
         let currentAvailabilityFilter = "";
-        let isDownloading = false;
-        let downloadInterval = null;
-        let currentDownloadFile = null;
         let dataSource = '默认数据';
 
         const fileListEl = document.getElementById('fileList');
@@ -949,18 +568,6 @@
         const searchResultsCount = document.getElementById('searchResultsCount');
         const refreshBtn = document.getElementById('refreshBtn');
         const dataSourceInfo = document.getElementById('dataSourceInfo');
-
-        const downloadAnimation = document.getElementById('downloadAnimation');
-        const downloadStatus = document.getElementById('downloadStatus');
-        const downloadFileName = document.getElementById('downloadFileName');
-        const progressBar = document.getElementById('progressBar');
-        const downloadDetails = document.getElementById('downloadDetails');
-        const cancelDownloadBtn = document.getElementById('cancelDownload');
-        const securityConfirmation = document.getElementById('securityConfirmation');
-        const securityWarningText = document.getElementById('securityWarningText');
-        const securityCheckbox = document.getElementById('securityCheckbox');
-        const confirmDownloadBtn = document.getElementById('confirmDownloadBtn');
-        const cancelSecurityDownloadBtn = document.getElementById('cancelSecurityDownloadBtn');
 
         function showError(message) {
             errorTextEl.textContent = message;
@@ -986,16 +593,12 @@
 
         async function loadFilesFromJSON() {
             try {
-                const response = await fetch('/files.json', {
-                    cache: 'no-cache'
-                });
+                const response = await fetch('/files.json', { cache: 'no-cache' });
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
-
                 if (!Array.isArray(data) || data.length === 0) {
                     throw new Error('JSON 数据格式无效或为空');
                 }
-
                 const loaded = data.map((f, index) => ({
                     id: f.id || index + 1,
                     name: f.name || '未命名文件',
@@ -1007,7 +610,6 @@
                     path: f.path || './' + (f.name || 'file'),
                     description: f.description || ''
                 }));
-
                 dataSource = 'files.json (外部数据)';
                 return loaded;
             } catch (err) {
@@ -1029,7 +631,6 @@
         async function checkAllFilesAvailability(files, onProgress) {
             const total = files.length;
             fileAvailability = {};
-
             for (let i = 0; i < total; i++) {
                 const file = files[i];
                 const exists = await checkFileExists(file.path);
@@ -1039,13 +640,11 @@
                 }
                 await new Promise(r => setTimeout(r, 80));
             }
-
             return fileAvailability;
         }
 
         function renderFileList(files) {
             fileListEl.innerHTML = '';
-
             if (!files || files.length === 0) {
                 fileListEl.innerHTML = `
                     <div class="no-results">
@@ -1062,11 +661,8 @@
                 const isAvailable = fileAvailability[file.id] || false;
                 const statusClass = isAvailable ? 'status-available' : 'status-unavailable';
                 const statusText = isAvailable ? '可用' : '不可用';
-
-                const securityWarning = (file.type === 'exe' || file.type === 'apk')
-                    ? '<span class="security-warning">安全警告</span>'
-                    : '';
-
+                const securityWarning = (file.type === 'exe' || file.type === 'apk') ?
+                    '<span class="security-warning">安全警告</span>' : '';
                 const iconClass = file.iconStyle || 'fas';
 
                 const card = document.createElement('div');
@@ -1093,8 +689,7 @@
                             data-file-size="${file.size}"
                             data-file-path="${file.path}"
                             data-file-type="${file.type}"
-                            ${!isAvailable ? 'disabled' : ''}
-                            ${isDownloading ? 'disabled' : ''}>
+                            ${!isAvailable ? 'disabled' : ''}>
                         <i class="fas fa-download"></i> 下载
                     </button>
                 `;
@@ -1126,191 +721,21 @@
             }
         }
 
+        // ========== 修改：下载按钮跳转到 download.html ==========
         function bindDownloadButtonEvents() {
             document.querySelectorAll('.download-btn[data-file-id]').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    if (this.disabled || isDownloading) return;
+                    if (this.disabled) return;
 
-                    const fileId = this.dataset.fileId;
                     const fileName = this.dataset.fileName;
-                    const fileSize = this.dataset.fileSize;
-                    const filePath = this.dataset.filePath;
-                    const fileType = this.dataset.fileType;
-
-                    isDownloading = true;
-                    disableAllDownloadButtons();
-
-                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 检查中...';
-                    this.classList.add('downloading');
-
-                    setTimeout(() => {
-                        handleDownload(fileId, fileName, fileSize, filePath, fileType);
-                    }, 400);
+                    // 对文件名进行编码，确保特殊字符（包括空格、?、&等）被正确处理
+                    const encoded = encodeURIComponent(fileName);
+                    // 跳转到下载页
+                    window.open('/download.html?file=' + encoded, '_blank');
                 });
             });
         }
-
-        function disableAllDownloadButtons() {
-            document.querySelectorAll('.download-btn[data-file-id]').forEach(b => b.disabled = true);
-        }
-
-        function enableAllDownloadButtons() {
-            document.querySelectorAll('.download-btn[data-file-id]').forEach(b => {
-                const fid = parseInt(b.dataset.fileId);
-                const avail = fileAvailability[fid] || false;
-                b.disabled = !avail;
-                b.innerHTML = '<i class="fas fa-download"></i> 下载';
-                b.classList.remove('downloading');
-            });
-        }
-
-        async function handleDownload(fileId, fileName, fileSize, filePath, fileType) {
-            currentDownloadFile = { fileId, fileName, fileSize, filePath, fileType };
-
-            downloadFileName.textContent = fileName;
-            downloadStatus.textContent = "正在检查文件...";
-            downloadStatus.style.color = "#2c3e50";
-            progressBar.style.width = "0%";
-            downloadDetails.textContent = `文件大小: ${fileSize}`;
-            downloadAnimation.classList.add('active');
-
-
-            securityConfirmation.style.display = 'none';
-            securityCheckbox.checked = false;
-            confirmDownloadBtn.disabled = true;
-
-            downloadStatus.textContent = "正在检查文件可用性...";
-            progressBar.style.width = "10%";
-
-            try {
-                const fileExists = await checkFileExists(filePath);
-
-                if (!fileExists) {
-                    downloadStatus.textContent = "文件不存在!";
-                    downloadStatus.style.color = "#e74c3c";
-                    progressBar.style.width = "100%";
-                    progressBar.style.background = "#e74c3c";
-                    setTimeout(() => {
-                        cancelDownload();
-                        progressBar.style.background = "linear-gradient(90deg, #3498db, #2ecc71)";
-                        showError(`文件 "${fileName}" 不存在于服务器上。请检查文件路径。`);
-                    }, 2500);
-                    return;
-                }
-
-                if (fileType === 'exe' || fileType === 'apk') {
-                    securityConfirmation.style.display = 'block';
-                    if (fileType === 'exe') {
-                        securityWarningText.textContent = "您正在下载一个 Windows 可执行文件 (.exe)。请确保您信任此文件的来源。可执行文件可能包含恶意软件，下载后请使用杀毒软件进行扫描。";
-                    } else {
-                        securityWarningText.textContent = "您正在下载一个 Android 应用安装包 (.apk)。请确保您信任此文件的来源。APK 文件可能包含恶意软件，请仅从可信来源下载应用。";
-                    }
-                    return;
-                }
-
-                startActualDownload(fileId, fileName, fileSize, filePath, fileType);
-
-            } catch (err) {
-                console.error("下载出错:", err);
-                downloadStatus.textContent = "下载出错!";
-                downloadStatus.style.color = "#e74c3c";
-                setTimeout(() => {
-                    cancelDownload();
-                    showError(`下载出错: ${err.message}`);
-                }, 2500);
-            }
-        }
-
-        function startActualDownload(fileId, fileName, fileSize, filePath, fileType) {
-            downloadStatus.textContent = "文件可用，准备下载...";
-            progressBar.style.width = "20%";
-
-            const sizeNum = parseFloat(fileSize) || 1;
-            const sizeUnit = fileSize.split(' ')[1] || 'MB';
-
-            let progress = 20;
-            downloadInterval = setInterval(() => {
-                progress += Math.random() * 6 + 1;
-                if (progress > 100) progress = 100;
-
-                progressBar.style.width = `${progress}%`;
-
-                const downloaded = (sizeNum * progress / 100).toFixed(1);
-                downloadDetails.textContent = `文件大小: ${fileSize} | 准备中: ${downloaded} ${sizeUnit}`;
-
-                if (progress < 40) {
-                    downloadStatus.textContent = "正在连接服务器...";
-                } else if (progress < 70) {
-                    downloadStatus.textContent = "正在获取文件...";
-                } else if (progress < 90) {
-                    downloadStatus.textContent = "正在处理文件...";
-                } else if (progress < 100) {
-                    downloadStatus.textContent = "正在拉起下载...";
-                } else {
-                    downloadStatus.textContent = "✓ 下载已触发!";
-                    downloadStatus.style.color = "#27ae60";
-
-                    setTimeout(() => {
-                        const link = document.createElement('a');
-                        link.href = filePath;
-                        link.download = fileName;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }, 400);
-
-                    setTimeout(() => {
-                        cancelDownload();
-                        downloadStatus.style.color = "#2c3e50";
-                    }, 3000);
-
-                    clearInterval(downloadInterval);
-                    downloadInterval = null;
-                }
-            }, 220);
-
-            cancelDownloadBtn.onclick = cancelDownload;
-        }
-
-        function cancelDownload() {
-            if (downloadInterval) {
-                clearInterval(downloadInterval);
-                downloadInterval = null;
-            }
-            downloadAnimation.classList.remove('active');
-            securityConfirmation.style.display = 'none';
-            securityCheckbox.checked = false;
-            confirmDownloadBtn.disabled = true;
-            isDownloading = false;
-            currentDownloadFile = null;
-            enableAllDownloadButtons();
-            progressBar.style.background = "linear-gradient(90deg, #3498db, #2ecc71)";
-        }
-
-        securityCheckbox.addEventListener('change', function() {
-            confirmDownloadBtn.disabled = !this.checked;
-        });
-
-        confirmDownloadBtn.addEventListener('click', function() {
-            securityConfirmation.style.display = 'none';
-            if (currentDownloadFile) {
-                startActualDownload(
-                    currentDownloadFile.fileId,
-                    currentDownloadFile.fileName,
-                    currentDownloadFile.fileSize,
-                    currentDownloadFile.filePath,
-                    currentDownloadFile.fileType
-                );
-            }
-        });
-
-        cancelSecurityDownloadBtn.addEventListener('click', function() {
-            securityConfirmation.style.display = 'none';
-            securityCheckbox.checked = false;
-            confirmDownloadBtn.disabled = true;
-            cancelDownload();
-        });
 
         function performSearch() {
             currentSearchQuery = searchInput.value.toLowerCase().trim();
@@ -1321,22 +746,18 @@
 
             const filtered = fileList.filter(file => {
                 let match = true;
-
                 if (currentSearchQuery) {
                     match = match && file.name.toLowerCase().includes(currentSearchQuery);
                 }
-
                 if (currentTypeFilter) {
                     match = match && file.type === currentTypeFilter;
                 }
-
                 if (currentSizeFilter) {
                     const sizeMB = formatFileSize(file.size);
                     if (currentSizeFilter === 'small') match = match && sizeMB < 1;
                     else if (currentSizeFilter === 'medium') match = match && sizeMB >= 1 && sizeMB <= 10;
                     else if (currentSizeFilter === 'large') match = match && sizeMB > 10;
                 }
-
                 if (currentDateFilter) {
                     const fileDate = parseDate(file.date);
                     const now = new Date();
@@ -1346,13 +767,11 @@
                     else if (currentDateFilter === 'month') match = match && diff < 30;
                     else if (currentDateFilter === 'year') match = match && diff < 365;
                 }
-
                 if (currentAvailabilityFilter) {
                     const avail = fileAvailability[file.id] || false;
                     if (currentAvailabilityFilter === 'available') match = match && avail;
                     else if (currentAvailabilityFilter === 'unavailable') match = match && !avail;
                 }
-
                 return match;
             });
 
@@ -1376,6 +795,7 @@
             currentDisplayedFiles = [...fileList];
             renderFileList(fileList);
         }
+
         async function refreshData() {
             refreshBtn.disabled = true;
             refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
@@ -1442,7 +862,7 @@
         }
 
         function updateStorage() {
-            const total = 10; // 10 GB
+            const total = 10;
             const used = fileList.reduce((sum, f) => {
                 const mb = formatFileSize(f.size);
                 return sum + (isNaN(mb) ? 0 : mb);
