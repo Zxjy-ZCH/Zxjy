@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download</title>
+    <title>Downloads</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -39,6 +39,51 @@
 
         .card:hover {
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10), 0 16px 56px rgba(0, 0, 0, 0.06);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            border-radius: 16px;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e8eaed;
+            border-top-color: #1a73e8;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .card-content-wrapper {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card-content-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .brand {
@@ -146,10 +191,6 @@
             animation: spin 0.9s linear infinite;
             margin-right: 8px;
             vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .page-error {
@@ -280,6 +321,73 @@
             border-color: #eab0b0;
         }
 
+        .error-state {
+            text-align: center;
+            padding: 8px 0 4px 0;
+        }
+
+        .error-state .error-icon {
+            font-size: 3.2rem;
+            color: #ea8600;
+            margin-bottom: 12px;
+        }
+
+        .error-state .error-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 4px;
+        }
+
+        .error-state .error-desc {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0 auto 16px auto;
+        }
+
+        .error-state .error-url {
+            font-size: 13px;
+            color: #1a73e8;
+            background: #e8f0fe;
+            padding: 6px 14px;
+            border-radius: 16px;
+            display: inline-block;
+            margin-bottom: 16px;
+            word-break: break-all;
+            max-width: 100%;
+        }
+
+        .open-link-btn {
+            display: inline-block;
+            background: #1a73e8;
+            color: #fff;
+            padding: 10px 32px;
+            border-radius: 24px;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            font-family: 'Roboto', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .open-link-btn:hover {
+            background: #1557b0;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.25);
+        }
+
+        .open-link-btn:active {
+            background: #0d47a1;
+        }
+
+        .open-link-btn i {
+            margin-right: 8px;
+        }
+
         @media (max-width: 480px) {
             .brand {
                 padding: 12px 16px 2px 16px;
@@ -308,40 +416,59 @@
                 font-size: 15px;
                 padding: 10px 24px;
             }
+            .error-state .error-title {
+                font-size: 18px;
+            }
+            .error-state .error-icon {
+                font-size: 2.6rem;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="card" id="downloadCard">
-        <div class="brand">
-            <img src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487" alt="Zxjy" loading="lazy" />
-            <span>Zxjy_Download</span>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
         </div>
 
-        <div class="progress-bar" id="progressBar">
-            <div class="line"></div>
-        </div>
+        <div class="card-content-wrapper" id="contentWrapper">
+            <div class="brand">
+                <img id="brandAvatar" src="https://api.yuafeng.cn/API/qqtx/api.php?qq=1104590487" alt="Zxjy" loading="lazy" />
+                <span>Zxjy_Download</span>
+            </div>
 
-        <div class="card-content" id="cardContent">
-            <div id="pageContainer">
-                <div class="page active" id="pageLoading">
-                    <div class="page-loading">
-                        <i class="fas fa-spinner fa-spin"></i> 加载中...
+            <div class="progress-bar" id="progressBar">
+                <div class="line"></div>
+            </div>
+
+            <div class="card-content" id="cardContent">
+                <div id="pageContainer">
+                    <div class="page active" id="pageLoading">
+                        <div class="page-loading">
+                            <i class="fas fa-spinner fa-spin"></i> 加载中...
+                        </div>
                     </div>
-                </div>
-                <div class="page" id="pageError">
-                    <div class="page-error">
-                        <i class="fas fa-exclamation-triangle"></i> <span id="errorMsg">错误</span>
+                    <div class="page" id="pageError">
+                        <div class="error-state" id="errorState">
+                            <div class="error-icon"><i class="fas fa-link"></i></div>
+                            <div class="error-title" id="errorTitle">无法获取文件</div>
+                            <div class="error-desc" id="errorDesc">链接可能无法直接下载，但你可以尝试在浏览器中打开该网站。</div>
+                            <div class="error-url" id="errorUrlDisplay"></div>
+                            <button class="open-link-btn" id="openLinkBtn"><i class="fas fa-external-link-alt"></i> 打开网站</button>
+                            <div id="openStatus" style="margin-top:8px;"></div>
+                        </div>
+                        <div style="text-align:center;margin-top:12px;">
+                            <a href="/Cloud%20Storage" class="btn-secondary btn-secondary-error" id="errorBackBtn">返回云存储</a>
+                        </div>
                     </div>
-                    <a href="/Cloud%20Storage" class="btn-secondary btn-secondary-error" id="errorBackBtn">返回云存储</a>
-                </div>
-                <div class="page" id="pageFile">
-                </div>
-                <div class="page" id="pageDownloading">
-                    <div class="page-downloading">
-                        <span class="spinner"></span>
-                        正在准备下载，请稍候...
+                    <div class="page" id="pageFile">
+                    </div>
+                    <div class="page" id="pageDownloading">
+                        <div class="page-downloading">
+                            <span class="spinner"></span>
+                            正在准备下载，请稍候...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -352,208 +479,273 @@
         (function() {
             'use strict';
 
-            function getFileParam() {
-                const href = window.location.href;
-                const fileIdx = href.indexOf('?file=');
-                if (fileIdx === -1) return null;
-                let raw = href.substring(fileIdx + 6);
-                const hashIdx = raw.indexOf('#');
-                if (hashIdx !== -1) raw = raw.substring(0, hashIdx);
-                return raw;
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const contentWrapper = document.getElementById('contentWrapper');
+            const avatar = document.getElementById('brandAvatar');
+
+            function waitForAvatar() {
+                return new Promise((resolve) => {
+                    if (avatar.complete) {
+                        resolve();
+                        return;
+                    }
+                    avatar.addEventListener('load', resolve);
+                    avatar.addEventListener('error', resolve);
+                    setTimeout(resolve, 5000);
+                });
             }
 
-            const fileParam = getFileParam();
+            waitForAvatar().then(() => {
+                loadingOverlay.classList.add('hidden');
+                contentWrapper.classList.add('visible');
 
-            const progressBar = document.getElementById('progressBar');
-            const pageLoading = document.getElementById('pageLoading');
-            const pageError = document.getElementById('pageError');
-            const pageFile = document.getElementById('pageFile');
-            const pageDownloading = document.getElementById('pageDownloading');
-            const errorMsg = document.getElementById('errorMsg');
-
-            function showPage(pageId) {
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                const target = document.getElementById(pageId);
-                if (target) {
-                    target.classList.remove('active');
-                    void target.offsetWidth;
-                    target.classList.add('active');
+                function getFileParam() {
+                    const href = window.location.href;
+                    const fileIdx = href.indexOf('?file=');
+                    if (fileIdx === -1) return null;
+                    let raw = href.substring(fileIdx + 6);
+                    const hashIdx = raw.indexOf('#');
+                    if (hashIdx !== -1) raw = raw.substring(0, hashIdx);
+                    return raw;
                 }
-            }
 
-            function showError(message) {
-                errorMsg.textContent = message;
-                showPage('pageError');
-                progressBar.classList.add('active');
-                progressBar.classList.add('error');
-            }
+                const fileParam = getFileParam();
 
-            function resetProgressBar() {
-                progressBar.classList.remove('error');
-            }
+                const progressBar = document.getElementById('progressBar');
+                const pageLoading = document.getElementById('pageLoading');
+                const pageError = document.getElementById('pageError');
+                const pageFile = document.getElementById('pageFile');
+                const pageDownloading = document.getElementById('pageDownloading');
+                const errorTitle = document.getElementById('errorTitle');
+                const errorDesc = document.getElementById('errorDesc');
+                const errorUrlDisplay = document.getElementById('errorUrlDisplay');
+                const openLinkBtn = document.getElementById('openLinkBtn');
+                const openStatus = document.getElementById('openStatus');
 
-            function triggerDownload(downloadUrl, fileName) {
-                resetProgressBar();
-                showPage('pageDownloading');
-                progressBar.classList.add('active');
+                let currentUrl = '';
 
-                const timer = setTimeout(() => {
+                function showPage(pageId) {
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    const target = document.getElementById(pageId);
+                    if (target) {
+                        target.classList.remove('active');
+                        void target.offsetWidth;
+                        target.classList.add('active');
+                    }
+                }
+
+                function showOpenLinkError(url) {
+                    currentUrl = url;
+                    errorTitle.textContent = '无法直接获取文件';
+                    errorDesc.textContent = '该链接可能不支持跨域下载，但你可以尝试在浏览器中直接打开。';
+                    errorUrlDisplay.textContent = url;
+                    openStatus.innerHTML = '';
+                    showPage('pageError');
+                    progressBar.classList.add('active');
+                    progressBar.classList.add('error');
+
+                    const newBtn = openLinkBtn.cloneNode(true);
+                    openLinkBtn.parentNode.replaceChild(newBtn, openLinkBtn);
+                    newBtn.addEventListener('click', function() {
+                        window.open(currentUrl, '_blank');
+                        openStatus.innerHTML = '<span style="color:#1e8e3e;font-size:14px;">✓ 已在新标签页打开</span>';
+                        setTimeout(() => {
+                            if (openStatus.innerHTML === '<span style="color:#1e8e3e;font-size:14px;">✓ 已在新标签页打开</span>') {
+                                openStatus.innerHTML = '';
+                            }
+                        }, 5000);
+                    });
+                }
+
+                function resetProgressBar() {
+                    progressBar.classList.remove('error');
+                }
+
+                function triggerDownload(downloadUrl, fileName) {
+                    resetProgressBar();
+                    showPage('pageDownloading');
+                    progressBar.classList.add('active');
+
+                    const timer = setTimeout(() => {
+                        progressBar.classList.remove('active');
+
+                        const link = document.createElement('a');
+                        link.href = downloadUrl;
+                        link.download = fileName;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        showPage('pageFile');
+                    }, 3500);
+                }
+
+                function showFile(fileInfo) {
+                    resetProgressBar();
                     progressBar.classList.remove('active');
 
-                    const link = document.createElement('a');
-                    link.href = downloadUrl;
-                    link.download = fileName;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                    const iconMap = {
+                        'exe': 'fa-windows',
+                        'apk': 'fa-android',
+                        'pdf': 'fa-file-pdf',
+                        'image': 'fa-file-image',
+                        'doc': 'fa-file-word',
+                        'zip': 'fa-file-archive',
+                        'video': 'fa-file-video',
+                        'audio': 'fa-file-audio',
+                        'txt': 'fa-file-alt',
+                        'default': 'fa-file'
+                    };
+                    const iconClass = iconMap[fileInfo.type] || iconMap['default'];
+                    const iconStyle = fileInfo.iconStyle || 'fab';
+
+                    let securityHtml = '';
+                    if (fileInfo.type === 'exe' || fileInfo.type === 'apk') {
+                        const warningMsg = fileInfo.type === 'exe' ?
+                            '您正在下载一个 Windows 可执行文件 (.exe)。请确保您信任此文件的来源。' :
+                            '您正在下载一个 Android 应用安装包 (.apk)。请确保您信任此文件的来源。';
+                        securityHtml = `
+                            <div class="security-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div><strong>安全提醒</strong>${warningMsg}</div>
+                            </div>
+                        `;
+                    }
+
+                    const downloadUrl = fileInfo.isExternal ? fileInfo.url : fileInfo.path;
+
+                    pageFile.innerHTML = `
+                        <div class="file-icon"><i class="${iconStyle} ${iconClass}"></i></div>
+                        <div class="file-name">${fileInfo.name}</div>
+                        <div class="file-detail">大小：<span>${fileInfo.size || '未知'}</span></div>
+                        <div class="file-detail">日期：<span>${fileInfo.date || '未知'}</span></div>
+                        <div class="file-detail">类型：<span>${fileInfo.type ? fileInfo.type.toUpperCase() : '未知'}</span></div>
+                        ${securityHtml}
+                        <button class="btn-primary" id="downloadBtn">立即下载</button>
+                        <a href="/Cloud%20Storage" class="btn-secondary" id="backBtn">返回云存储</a>
+                    `;
+
+                    document.getElementById('downloadBtn').addEventListener('click', function() {
+                        triggerDownload(downloadUrl, fileInfo.name);
+                    });
 
                     showPage('pageFile');
-                }, 3500);
-            }
-
-            function showFile(fileInfo) {
-                resetProgressBar();
-                progressBar.classList.remove('active');
-
-                const iconMap = {
-                    'exe': 'fa-windows',
-                    'apk': 'fa-android',
-                    'pdf': 'fa-file-pdf',
-                    'image': 'fa-file-image',
-                    'doc': 'fa-file-word',
-                    'zip': 'fa-file-archive',
-                    'video': 'fa-file-video',
-                    'audio': 'fa-file-audio',
-                    'txt': 'fa-file-alt',
-                    'default': 'fa-file'
-                };
-                const iconClass = iconMap[fileInfo.type] || iconMap['default'];
-                const iconStyle = fileInfo.iconStyle || 'fab';
-
-                let securityHtml = '';
-                if (fileInfo.type === 'exe' || fileInfo.type === 'apk') {
-                    const warningMsg = fileInfo.type === 'exe' ?
-                        '您正在下载一个 Windows 可执行文件 (.exe)。请确保您信任此文件的来源。' :
-                        '您正在下载一个 Android 应用安装包 (.apk)。请确保您信任此文件的来源。';
-                    securityHtml = `
-                        <div class="security-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <div><strong>安全提醒</strong>${warningMsg}</div>
-                        </div>
-                    `;
                 }
 
-                const downloadUrl = fileInfo.isExternal ? fileInfo.url : fileInfo.path;
+                progressBar.classList.add('active');
+                resetProgressBar();
 
-                pageFile.innerHTML = `
-                    <div class="file-icon"><i class="${iconStyle} ${iconClass}"></i></div>
-                    <div class="file-name">${fileInfo.name}</div>
-                    <div class="file-detail">大小：<span>${fileInfo.size || '未知'}</span></div>
-                    <div class="file-detail">日期：<span>${fileInfo.date || '未知'}</span></div>
-                    <div class="file-detail">类型：<span>${fileInfo.type ? fileInfo.type.toUpperCase() : '未知'}</span></div>
-                    ${securityHtml}
-                    <button class="btn-primary" id="downloadBtn">立即下载</button>
-                    <a href="/Cloud%20Storage" class="btn-secondary" id="backBtn">返回云存储</a>
-                `;
+                if (!fileParam) {
+                    errorTitle.textContent = '未指定文件';
+                    errorDesc.textContent = '请确保链接中包含 ?file= 参数。';
+                    errorUrlDisplay.textContent = '—';
+                    openLinkBtn.style.display = 'none';
+                    showPage('pageError');
+                    progressBar.classList.add('active');
+                    progressBar.classList.add('error');
+                    return;
+                }
 
-                document.getElementById('downloadBtn').addEventListener('click', function() {
-                    triggerDownload(downloadUrl, fileInfo.name);
-                });
+                const isExternalUrl = fileParam.startsWith('http://') || fileParam.startsWith('https://');
 
-                showPage('pageFile');
-            }
+                if (isExternalUrl) {
+                    const url = fileParam;
+                    document.querySelector('#pageLoading .page-loading').innerHTML =
+                        '<i class="fas fa-spinner fa-spin"></i> 正在检测链接有效性...';
 
-            progressBar.classList.add('active');
-            resetProgressBar();
+                    fetch(url, { method: 'HEAD', mode: 'cors' })
+                        .then(response => {
+                            if (response.ok) {
+                                const fileName = url.split('/').pop() || '下载文件';
+                                const ext = fileName.split('.').pop().toLowerCase();
+                                const typeMap = {
+                                    'exe': 'exe', 'apk': 'apk', 'pdf': 'pdf',
+                                    'jpg': 'image', 'jpeg': 'image', 'png': 'image', 'gif': 'image',
+                                    'zip': 'zip', 'rar': 'zip', '7z': 'zip',
+                                    'mp4': 'video', 'mkv': 'video',
+                                    'mp3': 'audio', 'wav': 'audio',
+                                    'txt': 'txt', 'doc': 'doc', 'docx': 'doc'
+                                };
+                                const fileType = typeMap[ext] || 'default';
 
-            if (!fileParam) {
-                showError('未指定文件');
-                return;
-            }
-
-            const isExternalUrl = fileParam.startsWith('http://') || fileParam.startsWith('https://');
-
-            if (isExternalUrl) {
-                const url = fileParam;
-                document.querySelector('#pageLoading .page-loading').innerHTML =
-                    '<i class="fas fa-spinner fa-spin"></i> 正在检测链接有效性...';
-
-                fetch(url, { method: 'HEAD', mode: 'cors' })
-                    .then(response => {
-                        if (response.ok) {
-                            const fileName = url.split('/').pop() || '下载文件';
-                            const ext = fileName.split('.').pop().toLowerCase();
-                            const typeMap = {
-                                'exe': 'exe', 'apk': 'apk', 'pdf': 'pdf',
-                                'jpg': 'image', 'jpeg': 'image', 'png': 'image', 'gif': 'image',
-                                'zip': 'zip', 'rar': 'zip', '7z': 'zip',
-                                'mp4': 'video', 'mkv': 'video',
-                                'mp3': 'audio', 'wav': 'audio',
-                                'txt': 'txt', 'doc': 'doc', 'docx': 'doc'
-                            };
-                            const fileType = typeMap[ext] || 'default';
-
-                            const contentLength = response.headers.get('content-length');
-                            let size = '未知';
-                            if (contentLength) {
-                                const bytes = parseInt(contentLength);
-                                if (bytes > 1024 * 1024) {
-                                    size = (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-                                } else if (bytes > 1024) {
-                                    size = (bytes / 1024).toFixed(2) + ' KB';
-                                } else {
-                                    size = bytes + ' B';
+                                const contentLength = response.headers.get('content-length');
+                                let size = '未知';
+                                if (contentLength) {
+                                    const bytes = parseInt(contentLength);
+                                    if (bytes > 1024 * 1024) {
+                                        size = (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+                                    } else if (bytes > 1024) {
+                                        size = (bytes / 1024).toFixed(2) + ' KB';
+                                    } else {
+                                        size = bytes + ' B';
+                                    }
                                 }
+
+                                const fileInfo = {
+                                    name: fileName,
+                                    size: size,
+                                    date: '未知',
+                                    type: fileType,
+                                    icon: fileType === 'exe' ? 'windows' : (fileType === 'apk' ? 'android' : 'file'),
+                                    iconStyle: (fileType === 'exe' || fileType === 'apk') ? 'fab' : 'fas',
+                                    path: url,
+                                    isExternal: true,
+                                    url: url
+                                };
+
+                                setTimeout(() => showFile(fileInfo), 300);
+                            } else {
+                                openLinkBtn.style.display = 'inline-block';
+                                showOpenLinkError(url);
                             }
-
+                        })
+                        .catch(err => {
+                            console.warn('检测外部链接失败:', err);
+                            openLinkBtn.style.display = 'inline-block';
+                            showOpenLinkError(url);
+                        });
+                } else {
+                    fetch('/files.json', { cache: 'no-cache' })
+                        .then(res => {
+                            if (!res.ok) throw new Error('无法获取文件列表');
+                            return res.json();
+                        })
+                        .then(files => {
+                            const decodedName = decodeURIComponent(fileParam);
+                            const file = files.find(f => f.name === decodedName);
+                            if (!file) {
+                                errorTitle.textContent = '文件不存在';
+                                errorDesc.textContent = `"${decodedName}" 不在文件列表中。`;
+                                errorUrlDisplay.textContent = '—';
+                                openLinkBtn.style.display = 'none';
+                                showPage('pageError');
+                                progressBar.classList.add('active');
+                                progressBar.classList.add('error');
+                                return;
+                            }
                             const fileInfo = {
-                                name: fileName,
-                                size: size,
-                                date: '未知',
-                                type: fileType,
-                                icon: fileType === 'exe' ? 'windows' : (fileType === 'apk' ? 'android' : 'file'),
-                                iconStyle: (fileType === 'exe' || fileType === 'apk') ? 'fab' : 'fas',
-                                path: url,
-                                isExternal: true,
-                                url: url
+                                name: file.name,
+                                size: file.size || '未知',
+                                date: file.date || '未知',
+                                type: file.type || 'default',
+                                icon: file.icon || 'file',
+                                iconStyle: file.iconStyle || 'fas',
+                                path: file.path || './' + file.name,
+                                isExternal: false
                             };
-
                             setTimeout(() => showFile(fileInfo), 300);
-                        } else {
-                            showError('链接无效或文件不存在 (HTTP ' + response.status + ')');
-                        }
-                    })
-                    .catch(err => {
-                        console.warn('检测外部链接失败:', err);
-                        showError('无法访问该链接，可能是跨域限制或链接已失效');
-                    });
-            } else {
-                fetch('/files.json', { cache: 'no-cache' })
-                    .then(res => {
-                        if (!res.ok) throw new Error('无法获取文件列表');
-                        return res.json();
-                    })
-                    .then(files => {
-                        const decodedName = decodeURIComponent(fileParam);
-                        const file = files.find(f => f.name === decodedName);
-                        if (!file) {
-                            showError(`文件 "${decodedName}" 不存在`);
-                            return;
-                        }
-                        const fileInfo = {
-                            name: file.name,
-                            size: file.size || '未知',
-                            date: file.date || '未知',
-                            type: file.type || 'default',
-                            icon: file.icon || 'file',
-                            iconStyle: file.iconStyle || 'fas',
-                            path: file.path || './' + file.name,
-                            isExternal: false
-                        };
-                        setTimeout(() => showFile(fileInfo), 300);
-                    })
-                    .catch(err => showError('加载文件列表失败：' + err.message));
-            }
+                        })
+                        .catch(err => {
+                            errorTitle.textContent = '加载失败';
+                            errorDesc.textContent = err.message;
+                            errorUrlDisplay.textContent = '—';
+                            openLinkBtn.style.display = 'none';
+                            showPage('pageError');
+                            progressBar.classList.add('active');
+                            progressBar.classList.add('error');
+                        });
+                }
+            });
         })();
     </script>
 
